@@ -6,7 +6,7 @@ import Logo from "../components/Logo";
 export default function MainLayout(page: ReactElement) {
   return (
     <div className="min-h-screen">
-      <header className="supports-backdrop-blur:bg-white/60 sticky top-0 w-full flex-none border-b border-slate-900/10 bg-white/95 backdrop-blur">
+      <header className="supports-backdrop-blur:bg-white/60 sticky top-0 z-10 w-full flex-none border-b border-slate-900/10 bg-white/95 backdrop-blur">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-4 px-4 py-4">
             <Logo />
@@ -33,7 +33,7 @@ export default function MainLayout(page: ReactElement) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-4">{page}</main>
+      <main className="mx-auto max-w-7xl p-8">{page}</main>
     </div>
   );
 }
