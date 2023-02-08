@@ -103,7 +103,6 @@ export const normalizeBreed = (breed: CatBreed) => ({
     grooming: breed.grooming,
     health_issues: breed.health_issues,
     intelligence: breed.intelligence,
-    lap: breed.lap,
     sheddingLevel: breed.shedding_level,
     socialNeeds: breed.social_needs,
     vocalisation: breed.vocalisation,
@@ -116,6 +115,7 @@ export const normalizeBreed = (breed: CatBreed) => ({
     breed.hairless ? "Hairless" : null,
     breed.hypoallergenic ? "Hypoallergenic" : null,
     breed.indoor ? "Indoor" : null,
+    breed.lap ? "Lap" : null,
     breed.natural ? "Natural" : null,
     breed.rare ? "Rare" : null,
     breed.rex ? "Rex" : null,
@@ -130,6 +130,17 @@ export type NormalizedCatBreed = ReturnType<typeof normalizeBreed>;
 export type NormalizedCatData = Omit<CatData, "breeds"> & {
   breeds: NormalizedCatBreed[];
 };
+
+export const Favorite = z.object({
+  created_at: z.string(),
+  id: z.number(),
+  image: z.object({
+    id: z.string(),
+    url: z.string(),
+  }),
+  image_id: z.string(),
+  sub_id: z.string(),
+});
 
 export const getImages = async (
   params: {
@@ -206,13 +217,7 @@ export const getFavorites = async (subId: string) => {
     },
   });
 
-  return z
-    .array(CatData)
-    .parse(response.data)
-    .map((item) => ({
-      ...item,
-      breeds: item.breeds?.map(normalizeBreed),
-    }));
+  return z.array(Favorite).parse(response.data);
 };
 
 export const setFavorite = async (imageId: string, subId: string) => {
@@ -222,13 +227,8 @@ export const setFavorite = async (imageId: string, subId: string) => {
   });
 };
 
-export const deleteFavorite = async (imageId: string, subId: string) => {
+export const deleteFavorite = async (favoriteId: number) => {
   return await axios.delete(
-    `https://api.thecatapi.com/v1/favourites/${imageId}`,
-    {
-      params: {
-        sub_id: subId,
-      },
-    }
+    `https://api.thecatapi.com/v1/favourites/${favoriteId}`
   );
 };
