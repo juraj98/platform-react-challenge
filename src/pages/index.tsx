@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { NormalizedCatData } from "../api";
 import { getImages } from "../api";
 import FullImageCard from "../components/ImageCard/FullImageCard";
@@ -8,10 +8,7 @@ import MainLayout from "../layouts/MainLayout";
 import type { NextPageWithLayout } from "./_app";
 
 const Home: NextPageWithLayout = () => {
-  const [activeImageData, setActiveImageData] = useState<null | {
-    catData: NormalizedCatData;
-    element: HTMLDivElement;
-  }>(null);
+  const [activeCatId, setActiveCatId] = useState<string | null>(null);
 
   const { hasNextPage, isFetchingNextPage, fetchNextPage, ...result } =
     useInfiniteQuery({
@@ -23,10 +20,37 @@ const Home: NextPageWithLayout = () => {
       refetchOnWindowFocus: false,
     });
 
-  const getOnClick =
-    (catData: NormalizedCatData) => (element: HTMLDivElement) => {
-      setActiveImageData({ catData, element });
+  const getOnClick = (catData: NormalizedCatData) => () => {
+    setActiveCatId(catData.id);
+  };
+
+  const activeCatData = useMemo(() => {
+    let value: NormalizedCatData | undefined;
+
+    result.data?.pages.some((page) => {
+      value = page.find((catData) => catData.id === activeCatId);
+
+      return value;
+    });
+
+    return value;
+  }, [activeCatId, result.data]);
+
+  useEffect(() => {
+    if (!window) return undefined;
+
+    const callback = (event: PopStateEvent) => {
+      const state = event.state as { catId?: string };
+
+      setActiveCatId(state.catId || null);
     };
+
+    window.addEventListener("popstate", callback);
+
+    return () => {
+      window.removeEventListener("popstate", callback);
+    };
+  }, []);
 
   if (isFetchingNextPage) {
     return <div>Loading...</div>;
@@ -42,18 +66,20 @@ const Home: NextPageWithLayout = () => {
         page.map((catData, index) => (
           <ImageCard
             onClick={getOnClick(catData)}
-            invisible={activeImageData?.catData.id === catData.id}
+            invisible={activeCatData?.id === catData.id}
             key={`${pageIndex}-${index}-${catData.id}`}
             catData={catData}
             expanded={false}
           />
         ))
       )}
-      {activeImageData && (
+      {activeCatData && (
         <FullImageCard
-          onClose={() => setActiveImageData(null)}
-          catData={activeImageData.catData}
-          startFrom={activeImageData.element.getBoundingClientRect()}
+          onClose={() => {
+            window.history.pushState({}, "", "/");
+            return setActiveCatId(null);
+          }}
+          catData={activeCatData}
         />
       )}
     </div>

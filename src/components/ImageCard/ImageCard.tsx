@@ -1,6 +1,6 @@
-import type { MouseEvent, ReactNode } from "react";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { useRef } from "react";
-import { useState } from "react";
 import type { NormalizedCatData } from "../../api";
 import { ImageCardBreedDescription } from "./components/ImageCardBreedDescription";
 import { ImageCardBreedName } from "./components/ImageCardBreedName";
@@ -21,41 +21,58 @@ export interface ImageCardProps {
 export const ImageCard = ({ onClick, ...otherProps }: ImageCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
+  const { id } = otherProps.catData;
+
   return (
-    <div
-      ref={ref}
-      onClick={() => {
-        if (ref.current && onClick) onClick(ref.current);
+    <Link
+      href={`image/${id}`}
+      onClick={(event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        if (window) {
+          window.history.pushState(
+            { catId: otherProps.catData.id },
+            "",
+            `image/${id}`
+          );
+        }
       }}
-      className="overflow-auto"
     >
-      <ImageCardWrapper {...otherProps}>
-        <div className="flex flex-row">
-          <div className="flex flex-col">
-            <ImageCardImage {...otherProps} />
-            <ImageCardTags {...otherProps} />
-            <div className="flex flex-row items-center ">
-              <ImageCardFavoriteButton {...otherProps} />
-              <ImageCardBreedName {...otherProps} />
-            </div>
-            <ImageCardBreedDescription {...otherProps} />
-            <ImageCardBreedStats
-              {...otherProps}
-              className="md:hidden"
-              collapseDirection="vertical"
-            />
-          </div>
-          <div className="flex flex-shrink-0 flex-col">
-            <div>
+      <div
+        ref={ref}
+        onClick={() => {
+          if (ref.current && onClick) onClick(ref.current);
+        }}
+        className="overflow-auto"
+      >
+        <ImageCardWrapper {...otherProps}>
+          <div className="flex flex-row">
+            <div className="flex flex-col">
+              <ImageCardImage {...otherProps} />
+              <ImageCardTags {...otherProps} />
+              <div className="flex flex-row items-center ">
+                <ImageCardFavoriteButton {...otherProps} />
+                <ImageCardBreedName {...otherProps} />
+              </div>
+              <ImageCardBreedDescription {...otherProps} />
               <ImageCardBreedStats
                 {...otherProps}
-                collapseDirection="both"
-                className="hidden md:grid"
+                className="md:hidden"
+                collapseDirection="vertical"
               />
             </div>
+            <div className="flex flex-shrink-0 flex-col">
+              <div>
+                <ImageCardBreedStats
+                  {...otherProps}
+                  collapseDirection="both"
+                  className="hidden md:grid"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </ImageCardWrapper>
-    </div>
+        </ImageCardWrapper>
+      </div>
+    </Link>
   );
 };
