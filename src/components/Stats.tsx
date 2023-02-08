@@ -2,24 +2,6 @@ import type { ReactNode } from "react";
 import type { NormalizedCatBreed } from "../api";
 import cx from "classnames";
 
-const ATTRIBUTES: [string, string][] = [
-  ["adaptability", "Adaptability"],
-  ["affectionLevel", "Affection Level"],
-  ["bidability", "Bidability"],
-  ["energyLevel", "Energy Level"],
-  ["grooming", "Grooming"],
-  ["healthIssues", "Health Issues"],
-  ["intelligence", "Intelligence"],
-  ["lap", "Lap"],
-  ["sheddingLevel", "Shedding Level"],
-  ["socialNeeds", "Social Needs"],
-  ["vocalisation", "Vocalisation"],
-  ["catFriendly", "Cat Friendly"],
-  ["childFriendly", "Child Friendly"],
-  ["dogFriendly", "Dog Friendly"],
-  ["strangerFriendly", "Stranger Friendly"],
-];
-
 export interface Stat {
   key: string;
   label: ReactNode;

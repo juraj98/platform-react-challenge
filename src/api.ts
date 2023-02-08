@@ -71,7 +71,7 @@ export const CatData = z.object({
 
 export type CatData = z.infer<typeof CatData>;
 
-const normalizeBreed = (breed: CatBreed) => ({
+export const normalizeBreed = (breed: CatBreed) => ({
   altNames: breed.alt_names,
   countryCode: breed.country_codes.split(", "),
   description: breed.description,
@@ -159,10 +159,13 @@ export const getImages = async (
   return z
     .array(CatData)
     .parse(response.data)
-    .map((item) => ({
-      ...item,
-      breeds: item.breeds?.map(normalizeBreed),
-    }));
+    .map(
+      (item) =>
+        ({
+          ...item,
+          breeds: item.breeds?.map(normalizeBreed),
+        } as NormalizedCatData)
+    );
 };
 
 export const getImageById = async (imageId: string) => {
