@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 import type { NormalizedCatData } from "../../api";
 import { ImageCardBreedDescription } from "./components/ImageCardBreedDescription";
@@ -14,11 +15,20 @@ export interface ImageCardProps {
   catData: NormalizedCatData;
   children?: ReactNode;
   invisible?: boolean;
+  onClick?: (element: HTMLDivElement) => void;
 }
 
-export const ImageCard = ({ ...otherProps }: ImageCardProps) => {
+export const ImageCard = ({ onClick, ...otherProps }: ImageCardProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
   return (
-    <div>
+    <div
+      ref={ref}
+      onClick={() => {
+        if (ref.current && onClick) onClick(ref.current);
+      }}
+      className="overflow-auto"
+    >
       <ImageCardWrapper {...otherProps}>
         <div className="flex flex-row">
           <div className="flex flex-col">
@@ -35,7 +45,7 @@ export const ImageCard = ({ ...otherProps }: ImageCardProps) => {
               collapseDirection="vertical"
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-shrink-0 flex-col">
             <div>
               <ImageCardBreedStats
                 {...otherProps}

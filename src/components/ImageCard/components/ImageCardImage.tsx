@@ -2,7 +2,11 @@ import Image from "next/image";
 import type { ImageCardProps } from "../ImageCard";
 import cx from "classnames";
 
-export const ImageCardImage = ({ catData, expanded }: ImageCardProps) => {
+export const ImageCardImage = ({
+  catData,
+  invisible,
+  expanded,
+}: ImageCardProps) => {
   return (
     <figure className="overflow-auto">
       <div className="flex items-center justify-center overflow-hidden rounded-t-lg">
@@ -11,7 +15,11 @@ export const ImageCardImage = ({ catData, expanded }: ImageCardProps) => {
           height={catData.height}
           width={catData.width}
           alt="Cat"
-          className={cx("rounded-t-lg transition-all", expanded && "p-4")}
+          className={cx(
+            "rounded-t-lg transition-all duration-[1s]",
+            expanded && "p-4",
+            invisible && "transition-none"
+          )}
         />
       </div>
     </figure>

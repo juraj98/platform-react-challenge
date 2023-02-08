@@ -26,7 +26,7 @@ export const Collapse = ({
   return (
     <div
       className={cx(
-        "grid overflow-hidden transition-all",
+        "grid overflow-hidden transition-all duration-[1s]",
         className,
         expanded ? expandedClassName : collapsedClassName,
         (direction === "both" || direction === "vertical") && vertical,

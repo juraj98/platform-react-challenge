@@ -9,9 +9,9 @@ export const ImageCardWrapper = ({
   return (
     <div
       className={cx(
-        "h-fit w-fit overflow-hidden rounded-lg bg-white shadow-lg transition-all",
+        "h-fit w-fit overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-[1s]",
         expanded ? "max-w-full p-4" : "max-w-[16rem]",
-        invisible && "invisible"
+        invisible && "invisible transition-none"
       )}
     >
       {children}
