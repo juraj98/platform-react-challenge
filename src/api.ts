@@ -186,7 +186,10 @@ export const getImageById = async (imageId: string) => {
 
   const data = CatData.parse(response.data);
 
-  return { ...data, breeds: data.breeds?.map(normalizeBreed) };
+  return {
+    ...data,
+    breeds: data.breeds?.map(normalizeBreed),
+  } as NormalizedCatData;
 };
 
 export const getBreeds = async (

@@ -4,37 +4,29 @@ import type { NormalizedCatData } from "../api";
 import { getImages } from "../api";
 import FullImageCard from "../components/ImageCard/FullImageCard";
 import { ImageCard } from "../components/ImageCard/ImageCard";
+import useHomeImages from "../hooks/useHomeImages";
 import MainLayout from "../layouts/MainLayout";
 import type { NextPageWithLayout } from "./_app";
 
-const Home: NextPageWithLayout = () => {
-  const [activeCatId, setActiveCatId] = useState<string | null>(null);
+export interface HomeProps {
+  requiredId?: string;
+}
 
-  const { hasNextPage, isFetchingNextPage, fetchNextPage, ...result } =
-    useInfiniteQuery({
-      queryKey: ["images"],
-      queryFn: ({ pageParam = 1 }) =>
-        getImages({ page: pageParam as number, limit: 25, hasBreeds: true }),
-      keepPreviousData: true,
-      getNextPageParam: (lastPage, allPages): number => allPages.length + 1,
-      refetchOnWindowFocus: false,
-    });
+const Home: NextPageWithLayout<HomeProps> = ({ requiredId }) => {
+  const [activeCatId, setActiveCatId] = useState<string | null>(
+    requiredId ?? null
+  );
+
+  const { hasNextPage, isError, isLoading, fetchNextPage, images } =
+    useHomeImages(requiredId);
 
   const getOnClick = (catData: NormalizedCatData) => () => {
     setActiveCatId(catData.id);
   };
 
   const activeCatData = useMemo(() => {
-    let value: NormalizedCatData | undefined;
-
-    result.data?.pages.some((page) => {
-      value = page.find((catData) => catData.id === activeCatId);
-
-      return value;
-    });
-
-    return value;
-  }, [activeCatId, result.data]);
+    return images?.find((catData) => catData.id === activeCatId);
+  }, [activeCatId, images]);
 
   useEffect(() => {
     if (!window) return undefined;
@@ -52,27 +44,25 @@ const Home: NextPageWithLayout = () => {
     };
   }, []);
 
-  if (isFetchingNextPage) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (result.isError) {
+  if (isError) {
     return <div>Error</div>;
   }
 
   return (
     <div className="flex flex-row flex-wrap justify-center gap-5">
-      {result.data?.pages.map((page, pageIndex) =>
-        page.map((catData, index) => (
-          <ImageCard
-            onClick={getOnClick(catData)}
-            invisible={activeCatData?.id === catData.id}
-            key={`${pageIndex}-${index}-${catData.id}`}
-            catData={catData}
-            expanded={false}
-          />
-        ))
-      )}
+      {images?.map((catData, index) => (
+        <ImageCard
+          onClick={getOnClick(catData)}
+          invisible={activeCatData?.id === catData.id}
+          key={`${index}-${catData.id}`}
+          catData={catData}
+          expanded={false}
+        />
+      ))}
       {activeCatData && (
         <FullImageCard
           onClose={() => {

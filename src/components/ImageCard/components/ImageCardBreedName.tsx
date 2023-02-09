@@ -5,5 +5,9 @@ export const ImageCardBreedName = ({ catData }: ImageCardProps) => {
 
   if (!breed) return null;
 
-  return <h2 className="p-4 text-lg font-bold">{breed.name}</h2>;
+  return (
+    <h2 className="p-4 text-lg font-bold">
+      {breed.name} {catData.id}
+    </h2>
+  );
 };
