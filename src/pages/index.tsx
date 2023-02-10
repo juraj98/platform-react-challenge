@@ -2,6 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import type { NormalizedCatData } from "../api";
 import { getImages } from "../api";
+import Grid from "../components/Grid";
 import FullImageCard from "../components/ImageCard/FullImageCard";
 import { ImageCard } from "../components/ImageCard/ImageCard";
 import useHomeImages from "../hooks/useHomeImages";
@@ -53,25 +54,28 @@ const Home: NextPageWithLayout<HomeProps> = ({ requiredId }) => {
   }
 
   return (
-    <div className="flex flex-row flex-wrap justify-center gap-5">
-      {images?.map((catData, index) => (
-        <ImageCard
-          onClick={getOnClick(catData)}
-          invisible={activeCatData?.id === catData.id}
-          key={`${index}-${catData.id}`}
-          catData={catData}
-          expanded={false}
-        />
-      ))}
-      {activeCatData && (
-        <FullImageCard
-          onClose={() => {
-            window.history.pushState({}, "", "/");
-            return setActiveCatId(null);
-          }}
-          catData={activeCatData}
-        />
-      )}
+    <div>
+      <h2 className="mb-6 text-xl">Images</h2>
+      <Grid>
+        {images?.map((catData, index) => (
+          <ImageCard
+            onClick={getOnClick(catData)}
+            invisible={activeCatData?.id === catData.id}
+            key={`${index}-${catData.id}`}
+            catData={catData}
+            expanded={false}
+          />
+        ))}
+        {activeCatData && (
+          <FullImageCard
+            onClose={() => {
+              window.history.pushState({}, "", "/");
+              return setActiveCatId(null);
+            }}
+            catData={activeCatData}
+          />
+        )}
+      </Grid>
     </div>
   );
 };

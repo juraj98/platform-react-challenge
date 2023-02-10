@@ -202,7 +202,7 @@ export const getBreeds = async (
     params,
   });
 
-  return z.array(CatBreed).parse(response.data).map(normalizeBreed);
+  return z.array(CatBreed).parse(response.data);
 };
 
 export const getBreedById = async (breedId: string) => {

@@ -1,4 +1,4 @@
-import cx from "classnames";
+import classNames from "classnames";
 import { Collapse } from "../../Collapse";
 import type { ImageCardProps } from "../ImageCard";
 
@@ -9,7 +9,7 @@ export default function ImageCardTags({ expanded, catData }: ImageCardProps) {
 
   return (
     <Collapse direction="vertical" expandedClassName="py-4" expanded={expanded}>
-      <ul className={cx("flex flex-wrap items-center gap-2 px-4")}>
+      <ul className={classNames("flex flex-wrap items-center gap-2 px-4")}>
         {breed.tags.map((tag, index) => (
           <li key={index} className="badge-primary badge whitespace-pre">
             {tag}

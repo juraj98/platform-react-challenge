@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ImageCardProps } from "../ImageCard";
-import cx from "classnames";
+import classNames from "classnames";
 
 export const ImageCardImage = ({
   catData,
@@ -15,7 +15,7 @@ export const ImageCardImage = ({
           height={catData.height}
           width={catData.width}
           alt="Cat"
-          className={cx(
+          className={classNames(
             "rounded-t-lg transition-all duration-[1s]",
             expanded && "p-4",
             invisible && "transition-none"

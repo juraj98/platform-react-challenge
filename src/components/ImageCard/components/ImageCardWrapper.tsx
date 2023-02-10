@@ -1,5 +1,5 @@
 import type { ImageCardProps } from "../ImageCard";
-import cx from "classnames";
+import classNames from "classnames";
 
 export const ImageCardWrapper = ({
   children,
@@ -8,7 +8,7 @@ export const ImageCardWrapper = ({
 }: ImageCardProps) => {
   return (
     <div
-      className={cx(
+      className={classNames(
         "h-fit w-fit overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-[1s]",
         expanded ? "max-w-full p-4" : "max-w-[16rem]",
         invisible && "invisible transition-none"

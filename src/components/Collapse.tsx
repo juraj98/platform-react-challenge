@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import cx from "classnames";
+import classNames from "classnames";
 
 export type CollapseDirection = "horizontal" | "vertical" | "both";
 
@@ -25,7 +25,7 @@ export const Collapse = ({
 
   return (
     <div
-      className={cx(
+      className={classNames(
         "grid overflow-hidden transition-all duration-[1s]",
         className,
         expanded ? expandedClassName : collapsedClassName,

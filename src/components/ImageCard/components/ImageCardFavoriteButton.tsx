@@ -3,7 +3,7 @@ import { deleteFavorite, getFavorites, setFavorite } from "../../../api";
 import { getSubId } from "../../../utils/getSubId";
 import { Collapse } from "../../Collapse";
 import IconHeart from "../../icons/IconHeart";
-import cx from "classnames";
+import classNames from "classnames";
 import type { ImageCardProps } from "../ImageCard";
 import { useMemo } from "react";
 
@@ -48,11 +48,14 @@ export const ImageCardFavoriteButton = ({
     >
       <button
         onClick={onClick}
-        className={cx("btn-ghost btn-circle btn", isLoading && "loading")}
+        className={classNames(
+          "btn-ghost btn-circle btn",
+          isLoading && "loading"
+        )}
       >
         {!isLoading && (
           <IconHeart
-            className={cx(
+            className={classNames(
               "stroke-primary",
               favorite ? "fill-primary" : "fill-transparent"
             )}
