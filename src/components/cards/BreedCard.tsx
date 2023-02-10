@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { CatBreed } from "../../api";
 import { getImages } from "../../api";
-import Card from "../../components/Card";
+import Card from "./Card";
 import catPlaceholderLg from "../../assets/images/cat-placeholder-lg.svg";
 import type { ImportedImage } from "../../types";
 

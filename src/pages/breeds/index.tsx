@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getBreeds } from "../../api";
 import Grid from "../../components/Grid";
 import MainLayout from "../../layouts/MainLayout";
-import BreedCard from "../../routes/Breeds/BreedCard";
+import BreedCard from "../../components/cards/BreedCard";
 import type { NextPageWithLayout } from "../_app";
 
 const Breeds: NextPageWithLayout = () => {

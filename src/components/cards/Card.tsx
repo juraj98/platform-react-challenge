@@ -29,7 +29,7 @@ const Card = ({ label, image, link, button }: CardProps) => (
           height={image.height}
         />
       </figure>
-      <div className="card-body">
+      <div className="card-body flex-row justify-between">
         <h2 className="card-title">{label}</h2>
         {button}
       </div>
