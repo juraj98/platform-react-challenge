@@ -21,6 +21,7 @@ export default function useHomeImages(requiredId?: string) {
     keepPreviousData: true,
     getNextPageParam: (lastPage, allPages): number => allPages.length + 1,
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   const {

@@ -5,14 +5,13 @@ import catPlaceholderLg from "../../assets/images/cat-placeholder-lg.svg";
 import type { ImportedImage } from "../../types";
 import IconClose from "../icons/IconClose";
 import IconButton from "../IconButton";
-import { useState } from "react";
 
-export interface FavoriteCard {
+export interface FavoriteCardProps {
   imageId: string;
   favoriteId: number;
 }
 
-const FavoriteCard = ({ favoriteId, imageId }: FavoriteCard) => {
+const FavoriteCard = ({ favoriteId, imageId }: FavoriteCardProps) => {
   const queryClient = useQueryClient();
   const { isLoading, isError, data } = useQuery({
     queryKey: ["images", imageId],

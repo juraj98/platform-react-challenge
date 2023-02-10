@@ -1,10 +1,8 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
-import type { NormalizedCatData } from "../api";
-import { getImages } from "../api";
+import { useEffect } from "react";
+import CatCard from "../components/cards/CatCard";
 import Grid from "../components/Grid";
-import FullImageCard from "../components/ImageCard/FullImageCard";
-import { ImageCard } from "../components/ImageCard/ImageCard";
+import LoadingGrid from "../components/LoadingGrid";
+import useCatModal from "../components/modals/useCatModal";
 import useHomeImages from "../hooks/useHomeImages";
 import MainLayout from "../layouts/MainLayout";
 import type { NextPageWithLayout } from "./_app";
@@ -14,20 +12,10 @@ export interface HomeProps {
 }
 
 const Home: NextPageWithLayout<HomeProps> = ({ requiredId }) => {
-  const [activeCatId, setActiveCatId] = useState<string | null>(
-    requiredId ?? null
-  );
-
   const { hasNextPage, isError, isLoading, fetchNextPage, images } =
     useHomeImages(requiredId);
 
-  const getOnClick = (catData: NormalizedCatData) => () => {
-    setActiveCatId(catData.id);
-  };
-
-  const activeCatData = useMemo(() => {
-    return images?.find((catData) => catData.id === activeCatId);
-  }, [activeCatId, images]);
+  const { Modal, setActiveCatId } = useCatModal(images);
 
   useEffect(() => {
     if (!window) return undefined;
@@ -43,11 +31,7 @@ const Home: NextPageWithLayout<HomeProps> = ({ requiredId }) => {
     return () => {
       window.removeEventListener("popstate", callback);
     };
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  }, [setActiveCatId]);
 
   if (isError) {
     return <div>Error</div>;
@@ -57,24 +41,18 @@ const Home: NextPageWithLayout<HomeProps> = ({ requiredId }) => {
     <div>
       <h2 className="mb-6 text-xl">Images</h2>
       <Grid>
-        {images?.map((catData, index) => (
-          <ImageCard
-            onClick={getOnClick(catData)}
-            invisible={activeCatData?.id === catData.id}
-            key={`${index}-${catData.id}`}
-            catData={catData}
-            expanded={false}
-          />
-        ))}
-        {activeCatData && (
-          <FullImageCard
-            onClose={() => {
-              window.history.pushState({}, "", "/");
-              return setActiveCatId(null);
-            }}
-            catData={activeCatData}
-          />
+        {isLoading ? (
+          <LoadingGrid />
+        ) : (
+          images?.map((catData, index) => (
+            <CatCard
+              setActiveCatId={setActiveCatId}
+              key={`${index}-${catData.id}`}
+              catData={catData}
+            />
+          ))
         )}
+        {Modal}
       </Grid>
     </div>
   );
