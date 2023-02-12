@@ -43,7 +43,7 @@ export const Favorites = () => {
       <Grid>
         {data.map((favorite) => (
           <FavoriteCard
-            refetchFavorites={refetch}
+            refetchFavorites={() => void refetch()}
             key={favorite.id}
             favorite={favorite}
           />
