@@ -26,6 +26,7 @@ const ImagePage: NextPageWithLayout<ImageProps> = (props) => {
           }
           key="desc"
         />
+        <meta property="og:image" content={props.requiredCat.url} />
       </Head>
       <Home requiredCat={props.requiredCat} />
     </>
