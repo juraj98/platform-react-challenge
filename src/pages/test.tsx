@@ -1,5 +1,5 @@
 import LoadingGrid from "../components/LoadingGrid";
-import CatModal from "../components/modals/CatModal";
+import Modal from "../components/modals/Modal";
 import MainLayout from "../layouts/MainLayout";
 import type { NextPageWithLayout } from "./_app";
 

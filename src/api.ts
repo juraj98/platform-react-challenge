@@ -131,6 +131,8 @@ export type NormalizedCatData = Omit<CatData, "breeds"> & {
   breeds: NormalizedCatBreed[];
 };
 
+export type BreedStats = NormalizedCatBreed["stats"];
+
 export const Favorite = z.object({
   created_at: z.string(),
   id: z.number(),

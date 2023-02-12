@@ -1,34 +1,24 @@
 import classNames from "classnames";
-import type { NormalizedCatData } from "../../../api";
+import type { BreedStats } from "../../../api";
 
-const ATTRIBUTES: [string, string][] = [
+const ATTRIBUTES: [keyof BreedStats, string][] = [
   ["adaptability", "Adaptability"],
   ["affectionLevel", "Affection Level"],
   ["bidability", "Bidability"],
   ["energyLevel", "Energy Level"],
   ["grooming", "Grooming"],
-  ["healthIssues", "Health Issues"],
   ["intelligence", "Intelligence"],
-  ["lap", "Lap"],
   ["sheddingLevel", "Shedding Level"],
   ["socialNeeds", "Social Needs"],
   ["vocalisation", "Vocalisation"],
-  ["catFriendly", "Cat Friendly"],
-  ["childFriendly", "Child Friendly"],
-  ["dogFriendly", "Dog Friendly"],
-  ["strangerFriendly", "Stranger Friendly"],
 ];
 
 export interface CatStatsProps {
   fullWidth?: boolean;
-  catData: NormalizedCatData;
+  stats: BreedStats;
 }
 
-const CatStats = ({ catData, fullWidth = false }: CatStatsProps) => {
-  const breed = catData.breeds?.[0];
-
-  if (!breed) return null;
-
+const CatStats = ({ stats, fullWidth = false }: CatStatsProps) => {
   return (
     <div
       className={classNames(
@@ -38,7 +28,7 @@ const CatStats = ({ catData, fullWidth = false }: CatStatsProps) => {
     >
       <ul>
         {ATTRIBUTES.map(([key, label]) => {
-          const value = breed.stats[key as keyof typeof breed.stats];
+          const value = stats[key];
 
           if (value === undefined) return null;
 

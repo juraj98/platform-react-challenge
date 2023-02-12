@@ -3,14 +3,16 @@ import { getFavorites } from "../api";
 import FavoriteCard from "../components/cards/FavoriteCard";
 import Grid from "../components/Grid";
 import LoadingGrid from "../components/LoadingGrid";
+import { useSubId } from "../hooks/useSubId";
 import MainLayout from "../layouts/MainLayout";
-import { getSubId } from "../utils/getSubId";
 import type { NextPageWithLayout } from "./_app";
 
 const Favorites: NextPageWithLayout = () => {
+  const subId = useSubId();
+
   const { isLoading, isError, data } = useQuery({
     queryKey: ["favorites"],
-    queryFn: () => getFavorites(getSubId()),
+    queryFn: () => getFavorites(subId),
   });
 
   if (isError) {

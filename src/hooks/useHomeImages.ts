@@ -9,6 +9,7 @@ export default function useHomeImages(requiredId?: string) {
     hasNextPage,
     isError: isImagesError,
     fetchNextPage,
+    isFetchingNextPage,
     ...result
   } = useInfiniteQuery({
     queryKey: ["images"],
@@ -48,6 +49,7 @@ export default function useHomeImages(requiredId?: string) {
     isError: isImagesError || isRequiredImageError,
     isLoading: (Boolean(requiredId) ? isLoading : false) || result.isLoading,
     fetchNextPage,
+    isFetchingNextPage,
     images,
   };
 }
