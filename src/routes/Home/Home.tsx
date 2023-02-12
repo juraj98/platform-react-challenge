@@ -55,10 +55,10 @@ export const Home = ({ imageFromUrl }: HomeProps) => {
         <LoadingGrid />
       ) : (
         <Grid>
-          {images?.map((imageData) => {
+          {images?.map((imageData, index) => {
             return (
               <NonRedirectLink
-                key={imageData.id}
+                key={`${index}-${imageData.id}`}
                 href={`/image/${imageData.id}`}
                 onClick={() => {
                   setModalData(imageData);

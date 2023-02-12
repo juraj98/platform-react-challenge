@@ -49,7 +49,6 @@ export const imagesRouter = createTRPCRouter({
             limit: input.limit,
             page: input.cursor,
             sub_id: input.subId,
-            order: "ASC",
           },
         }
       );
