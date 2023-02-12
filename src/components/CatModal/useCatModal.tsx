@@ -76,7 +76,10 @@ export const useCatModal = ({
     setModalData: setImageData,
     node: imageData ? (
       <CatModal
-        onClose={() => setImageData(null)}
+        onClose={() => {
+          window.history.pushState({ href: "/" }, "", "/");
+          return setImageData(null);
+        }}
         showAdditionalImages={showAdditionalImages}
         favorite={favoriteButton}
         imageData={imageData}

@@ -12,6 +12,12 @@ export interface HomeProps {
 }
 
 export const Home = ({ imageFromUrl }: HomeProps) => {
+  const { setModalData, node: modalNode } = useCatModal({
+    showFavoriteButton: true,
+    showAdditionalImages: false,
+    initialData: imageFromUrl,
+  });
+
   const {
     isError,
     isFetchingNextPage,
@@ -19,13 +25,7 @@ export const Home = ({ imageFromUrl }: HomeProps) => {
     fetchNextPage,
     isLoading,
     images,
-  } = useHomeInfiniteScroll(imageFromUrl);
-
-  const { setModalData, node: modalNode } = useCatModal({
-    showFavoriteButton: true,
-    showAdditionalImages: false,
-    initialData: imageFromUrl,
-  });
+  } = useHomeInfiniteScroll(setModalData, imageFromUrl);
 
   if (isError) {
     return <ErrorMessage />;

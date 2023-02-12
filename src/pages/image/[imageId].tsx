@@ -42,15 +42,20 @@ export const getServerSideProps: GetServerSideProps<ImageProps> = async ({
       props: {},
     };
 
-  const response = await axios.get(
-    `https://api.thecatapi.com/v1/images/${params.imageId}`
-  );
-
-  return {
-    props: {
-      imageFromUrl: normalizeImageData(ImageData.parse(response.data)),
-    },
-  };
+  try {
+    const response = await axios.get(
+      `https://api.thecatapi.com/v1/images/${params.imageId}`
+    );
+    return {
+      props: {
+        imageFromUrl: normalizeImageData(ImageData.parse(response.data)),
+      },
+    };
+  } catch {
+    return {
+      props: {},
+    };
+  }
 };
 
 ImagePage.getLayout = MainLayout;

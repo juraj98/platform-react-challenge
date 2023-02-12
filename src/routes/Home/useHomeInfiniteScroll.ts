@@ -1,4 +1,5 @@
 import { useSubId } from "hooks/useSubId";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo } from "react";
 import type { NormalizedImageData } from "server/api/routers/images";
 import { api } from "utils/api";
@@ -6,8 +7,12 @@ import { api } from "utils/api";
 const NUMBER_OF_IMAGES_PER_PAGE = 25;
 const SCROLL_THRESHOLD_PX = 500;
 
-export const useHomeInfiniteScroll = (imageFromUrl?: NormalizedImageData) => {
+export const useHomeInfiniteScroll = (
+  setModalData: (imageData: NormalizedImageData | null) => void,
+  imageFromUrl?: NormalizedImageData
+) => {
   const subId = useSubId();
+  const router = useRouter();
 
   const {
     data,
@@ -60,6 +65,26 @@ export const useHomeInfiniteScroll = (imageFromUrl?: NormalizedImageData) => {
       document.removeEventListener("scroll", onScrollListener as EventListener);
     };
   }, [onScrollListener]);
+
+  useEffect(() => {
+    if (!window) return undefined;
+
+    const callback = (event: PopStateEvent) => {
+      const state = event.state as { href?: string };
+
+      const imageId = state.href?.split("/")?.pop();
+
+      const imageData = images?.find((image) => image.id === imageId);
+
+      setModalData(imageData ?? null);
+    };
+
+    window.addEventListener("popstate", callback);
+
+    return () => {
+      window.removeEventListener("popstate", callback);
+    };
+  }, [images, router, setModalData]);
 
   return {
     isError,
