@@ -12,6 +12,8 @@ import {
 import IconHeart from "../icons/IconHeart";
 import Image from "next/image";
 import type { ImageProps } from "../../utils/image";
+import { AdditionalImages } from "./components/AdditionalImages";
+import useStyle from "../../hooks/useStyle";
 
 export interface CatModalProps {
   onClose: (event: MouseEvent<HTMLElement>) => void;
@@ -24,9 +26,18 @@ export interface CatModalProps {
     isLoading: boolean;
     isFavorite: boolean;
   };
+  additionalImages?: NormalizedCatData[];
 }
 
-const Modal = ({ mainImage, breed, favorite, onClose }: CatModalProps) => {
+const Modal = ({
+  mainImage,
+  additionalImages,
+  breed,
+  favorite,
+  onClose,
+}: CatModalProps) => {
+  useStyle("body {  overscroll-behavior-x: none; }");
+
   return (
     <div
       onClick={sameTargetListener(onClose)}
@@ -72,7 +83,7 @@ const Modal = ({ mainImage, breed, favorite, onClose }: CatModalProps) => {
                   />
                 </IconButton>
               )}
-              {breed && <h2 className="p-4 text-lg font-bold">{breed.name}</h2>}
+              {breed && <h2 className="p-2 text-lg font-bold">{breed.name}</h2>}
             </div>
           </div>
           <div className="hidden flex-shrink-0 flex-col md:flex">
@@ -83,6 +94,7 @@ const Modal = ({ mainImage, breed, favorite, onClose }: CatModalProps) => {
         <div className="block md:hidden">
           {breed && <CatStats fullWidth stats={breed.stats} />}
         </div>
+        <AdditionalImages images={additionalImages} />
       </div>
     </div>
   );

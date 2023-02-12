@@ -1,5 +1,7 @@
-import { useCallback, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect, useState } from "react";
 import type { CatBreed, NormalizedCatData } from "../../api";
+import { getImages } from "../../api";
 import { normalizeBreed } from "../../api";
 import { getImageDataOrPlaceholder } from "../../utils/image";
 import Modal from "./Modal";
@@ -10,9 +12,12 @@ export type SetBreedModalData = (
 ) => void;
 
 export const useBreedModal = () => {
+  const queryClient = useQueryClient();
   const [isOpened, setIsOpened] = useState(false);
   const [breedData, setBreedData] = useState<CatBreed>();
   const [breedImageData, setBreedImageData] = useState<NormalizedCatData>();
+  const [additionalBreedImages, setAdditionalBreedImages] =
+    useState<NormalizedCatData[]>();
 
   const setBreedModalData = useCallback(
     (breed: CatBreed, breedImageData: NormalizedCatData) => {
@@ -22,6 +27,21 @@ export const useBreedModal = () => {
     },
     []
   );
+
+  useEffect(() => {
+    if (isOpened && breedData) {
+      setAdditionalBreedImages(undefined);
+      queryClient
+        .fetchQuery({
+          queryKey: ["images", "breed", breedData.id],
+          queryFn: () => getImages({ breedIds: [breedData.id], limit: 10 }),
+        })
+        .then((data) => {
+          setAdditionalBreedImages(data);
+        })
+        .catch(console.error);
+    }
+  }, [breedData, isOpened, queryClient]);
 
   const node = isOpened ? (
     <Modal
@@ -33,6 +53,7 @@ export const useBreedModal = () => {
         height: breedImageData?.height,
       })}
       breed={breedData ? normalizeBreed(breedData) : undefined}
+      additionalImages={additionalBreedImages}
     />
   ) : null;
 

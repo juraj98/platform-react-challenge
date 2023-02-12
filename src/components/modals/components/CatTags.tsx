@@ -4,7 +4,7 @@ export interface CatTagsProps {
 
 const CatTags = ({ tags }: CatTagsProps) => {
   return (
-    <div className="max-h-full w-96 overflow-auto p-4">
+    <div className="max-h-full overflow-auto p-4">
       <ul className="flex flex-wrap items-center gap-2">
         {tags.map((tag, index) => (
           <li key={index} className="badge-primary badge whitespace-pre">
