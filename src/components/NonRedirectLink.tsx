@@ -5,7 +5,7 @@ import { useCallback } from "react";
 export interface NonRedirectLinkProps {
   href: string;
   children: ReactNode;
-  onClick: MouseEventHandler<HTMLAnchorElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   className?: string;
 }
 
@@ -20,11 +20,11 @@ export const NonRedirectLink: FC<NonRedirectLinkProps> = ({
       event.preventDefault();
       event.stopPropagation();
 
-      onClick(event);
-
       if (window) {
-        window.history.pushState({ href }, "", `/image/${href}`);
+        window.history.pushState({ href }, "", href);
       }
+
+      if (onClick) onClick(event);
     },
     [href, onClick]
   );

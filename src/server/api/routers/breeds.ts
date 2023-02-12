@@ -104,7 +104,7 @@ export const breedsRouter = createTRPCRouter({
       breeds.map(async (breed) =>
         imagesRouter
           .createCaller(ctx)
-          .getImageByBreedId({ subId: input.subId, id: breed.id })
+          .getImagesByBreedId({ subId: input.subId, id: breed.id })
       )
     );
 

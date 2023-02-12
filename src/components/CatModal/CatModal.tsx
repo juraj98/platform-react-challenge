@@ -1,40 +1,33 @@
-import type { NormalizedCatBreed, NormalizedCatData } from "../../api";
-import { CatTags } from "./components/CatTags";
-import { CatStats } from "./components/CatStats";
-import { IconButton } from "../IconButton";
-import { IconClose } from "../icons/IconClose";
-import type { MouseEvent } from "react";
 import classNames from "classnames";
-import {
-  containTargetListener,
-  sameTargetListener,
-} from "../../utils/uiListeners";
-import { IconHeart } from "../icons/IconHeart";
+import { AdditionalImages } from "components/CatModal/components/AdditionalImages";
+import { CatStats } from "components/CatModal/components/CatStats";
+import { CatTags } from "components/CatModal/components/CatTags";
+import { IconButton } from "components/IconButton";
+import { IconClose } from "components/icons/IconClose";
+import { IconHeart } from "components/icons/IconHeart";
+import { useStyle } from "hooks/useStyle";
 import Image from "next/image";
-import type { ImageProps } from "../../utils/image";
-import { AdditionalImages } from "./components/AdditionalImages";
-import { useStyle } from "../../hooks/useStyle";
+import type { MouseEventHandler } from "react";
+import type { NormalizedImageData } from "server/api/routers/images";
+import { containTargetListener, sameTargetListener } from "utils/uiListeners";
 
 export interface CatModalProps {
-  onClose: (event: MouseEvent<HTMLElement>) => void;
-  extraPhotos?: NormalizedCatData[];
-  mainImage: ImageProps;
-  breed?: NormalizedCatBreed;
+  onClose: MouseEventHandler;
+  imageData: NormalizedImageData;
   favorite?: {
-    onClick: (event: MouseEvent<HTMLElement>) => void;
+    onClick: MouseEventHandler<HTMLElement>;
     isFetching: boolean;
     isLoading: boolean;
     isFavorite: boolean;
   };
-  additionalImages?: NormalizedCatData[];
+  showAdditionalImages?: boolean;
 }
 
 export const CatModal = ({
-  mainImage,
-  additionalImages,
-  breed,
-  favorite,
   onClose,
+  imageData,
+  favorite,
+  showAdditionalImages,
 }: CatModalProps) => {
   useStyle("body {  overscroll-behavior-x: none; }");
 
@@ -46,7 +39,7 @@ export const CatModal = ({
       <div
         className={classNames(
           "relative flex max-h-full flex-col overflow-auto rounded-lg bg-white shadow-lg",
-          breed ? "p-4" : "p-8"
+          imageData.breed ? "p-4" : "p-8"
         )}
       >
         <IconButton
@@ -61,13 +54,13 @@ export const CatModal = ({
             <figure className="flex justify-center p-4">
               <Image
                 className="max-w-lg"
-                src={mainImage.src}
-                alt={mainImage.alt}
-                width={mainImage.width}
-                height={mainImage.height}
+                src={imageData.image.src}
+                alt={imageData.image.alt}
+                width={imageData.image.width}
+                height={imageData.image.height}
               />
             </figure>
-            {breed && <CatTags tags={breed.tags} />}
+            {imageData.breed && <CatTags tags={imageData.breed.tags} />}
             <div className="flex items-center px-2">
               {favorite && (
                 <IconButton
@@ -83,18 +76,28 @@ export const CatModal = ({
                   />
                 </IconButton>
               )}
-              {breed && <h2 className="p-2 text-lg font-bold">{breed.name}</h2>}
+              {imageData.breed && (
+                <h2 className="p-2 text-lg font-bold">
+                  {imageData.breed.name}
+                </h2>
+              )}
             </div>
           </div>
           <div className="hidden flex-shrink-0 flex-col md:flex">
-            {breed && <CatStats stats={breed.stats} />}
+            {imageData.breed && <CatStats stats={imageData.breed.stats} />}
           </div>
         </div>
-        {breed && <p className="p-4 pt-0">{breed.description}</p>}
+        {imageData.breed && (
+          <p className="p-4 pt-0">{imageData.breed.description}</p>
+        )}
         <div className="block md:hidden">
-          {breed && <CatStats fullWidth stats={breed.stats} />}
+          {imageData.breed && (
+            <CatStats fullWidth stats={imageData.breed.stats} />
+          )}
         </div>
-        <AdditionalImages images={additionalImages} />
+        {imageData.breed && showAdditionalImages && (
+          <AdditionalImages breedId={imageData.breed.id} />
+        )}
       </div>
     </div>
   );

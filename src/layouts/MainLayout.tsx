@@ -8,10 +8,10 @@ export const MainLayout = (page: ReactElement) => {
     <div className="min-h-screen">
       <header className="supports-backdrop-blur:bg-white/60 sticky top-0 z-10 w-full flex-none border-b border-slate-900/10 bg-white/95 backdrop-blur">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-center gap-4 px-4 py-4">
+          <div className="flex select-none items-center gap-4 px-4 py-4">
             <Logo />
             <nav className="text-sm font-semibold leading-6 text-slate-700">
-              <ul className="flex space-x-8">
+              <ul className="flex  space-x-8">
                 <li>
                   <Link href="/" className="hover:text-sky-500">
                     Home

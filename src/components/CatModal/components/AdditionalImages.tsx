@@ -1,26 +1,35 @@
+import { useSubId } from "hooks/useSubId";
 import Image from "next/image";
 import Link from "next/link";
-import type { NormalizedCatData } from "../../../api";
+import { api } from "utils/api";
 
 export interface AdditionalImagesProps {
-  images?: NormalizedCatData[];
+  breedId: string;
 }
 
-export const AdditionalImages = ({ images }: AdditionalImagesProps) => {
-  if (!images) return null;
+export const AdditionalImages = ({ breedId }: AdditionalImagesProps) => {
+  const subId = useSubId();
+
+  const { data } = api.images.getImages.useQuery({
+    breedIds: [breedId],
+    limit: 10,
+    subId,
+  });
+
+  if (!data) return null;
 
   return (
     <div className="carousel rounded-box mx-4 mb-4 h-32">
-      {images.map((catImage) => {
+      {data.map((imageData) => {
         return (
-          <div key={catImage.id} className="carousel-item">
-            <Link href={`image/${catImage.id}`}>
+          <div key={imageData.id} className="carousel-item">
+            <Link href={`image/${imageData.id}`}>
               <Image
-                src={catImage.url}
-                alt={catImage.breeds?.[0]?.name || "Cat"}
-                width={catImage.width}
+                src={imageData.image.src}
+                alt={imageData.breed?.name || "Unknown breed"}
+                width={imageData.image.width}
                 className="h-full w-auto"
-                height={catImage.height}
+                height={imageData.image.height}
               />
             </Link>
           </div>

@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import type { BreedStats } from "../../../api";
+import type { NormalizedBreedData } from "server/api/routers/breeds";
 
-const ATTRIBUTES: [keyof BreedStats, string][] = [
+const ATTRIBUTES: [keyof NormalizedBreedData["stats"], string][] = [
   ["adaptability", "Adaptability"],
   ["affectionLevel", "Affection Level"],
   ["bidability", "Bidability"],
@@ -15,7 +15,7 @@ const ATTRIBUTES: [keyof BreedStats, string][] = [
 
 export interface CatStatsProps {
   fullWidth?: boolean;
-  stats: BreedStats;
+  stats: NormalizedBreedData["stats"];
 }
 
 export const CatStats = ({ stats, fullWidth = false }: CatStatsProps) => {

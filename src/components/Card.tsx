@@ -1,22 +1,28 @@
+import classNames from "classnames";
 import Image from "next/image";
-import Link from "next/link";
-import type { MouseEvent, ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 import type { ImageProps } from "../utils/image";
-
-export interface CardLink {
-  onClick?: (event: MouseEvent) => void;
-  href: string;
-}
 
 export interface CardProps {
   label: string;
   image: ImageProps;
   button?: ReactNode;
+  className?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export const Card = ({ label, image, button }: CardProps) => {
+export const Card = ({
+  label,
+  className,
+  image,
+  onClick,
+  button,
+}: CardProps) => {
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div
+      className={classNames("card h-fit w-96 bg-base-100 shadow-xl", className)}
+      onClick={onClick}
+    >
       <figure>
         <Image
           priority

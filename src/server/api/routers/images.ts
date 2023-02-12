@@ -4,7 +4,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { ImageBreedData, normalizeBreedData } from "./breeds";
 
-const ImageData = z.object({
+export const ImageData = z.object({
   id: z.string(),
   breeds: z.array(ImageBreedData).optional(),
   height: z.number(),
@@ -12,7 +12,7 @@ const ImageData = z.object({
   url: z.string(),
 });
 
-const normalizeImageData = (imageData: z.infer<typeof ImageData>) => {
+export const normalizeImageData = (imageData: z.infer<typeof ImageData>) => {
   const breed = imageData.breeds?.[0];
 
   return {
@@ -71,8 +71,8 @@ export const imagesRouter = createTRPCRouter({
       return normalizeImageData(ImageData.parse(response.data));
     }),
 
-  getImageByBreedId: publicProcedure
-    .input(z.object({ id: z.string() }))
+  getImagesByBreedId: publicProcedure
+    .input(z.object({ id: z.string(), limit: z.number().optional() }))
     .query(async ({ input }) => {
       const response = await axios.get(
         "https://api.thecatapi.com/v1/images/search",
@@ -80,7 +80,7 @@ export const imagesRouter = createTRPCRouter({
           params: {
             breed_ids: input.id,
             has_breeds: 1,
-            limit: 1,
+            limit: input.limit ?? 1,
             sub_id: input.subId,
           },
         }

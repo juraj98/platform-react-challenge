@@ -4,7 +4,7 @@ import type { HomeProps } from "../routes/Home/Home";
 import { Home } from "../routes/Home/Home";
 import type { NextPageWithLayout } from "./_app";
 
-const HomePage: NextPageWithLayout<HomeProps> = ({ requiredCat }) => {
+const HomePage: NextPageWithLayout<HomeProps> = ({ imageFromUrl }) => {
   return (
     <>
       <Head>
@@ -15,7 +15,7 @@ const HomePage: NextPageWithLayout<HomeProps> = ({ requiredCat }) => {
           key="desc"
         />
       </Head>
-      <Home requiredCat={requiredCat} />
+      <Home imageFromUrl={imageFromUrl} />
     </>
   );
 };

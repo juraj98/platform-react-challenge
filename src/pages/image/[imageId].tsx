@@ -1,18 +1,17 @@
+import axios from "axios";
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
-import Home from "..";
-import type { NormalizedCatData } from "../../api";
-import { getImageById } from "../../api";
+import type { NormalizedImageData } from "server/api/routers/images";
+import { ImageData, normalizeImageData } from "server/api/routers/images";
+import { Home } from "routes/Home/Home";
 import { MainLayout } from "../../layouts/MainLayout";
 import type { NextPageWithLayout } from "../_app";
 
 interface ImageProps {
-  requiredCat: NormalizedCatData;
+  imageFromUrl?: NormalizedImageData;
 }
 
-const ImagePage: NextPageWithLayout<ImageProps> = (props) => {
-  const breed = props.requiredCat.breeds?.[0];
-
+const ImagePage: NextPageWithLayout<ImageProps> = ({ imageFromUrl }) => {
   return (
     <>
       <Head>
@@ -20,26 +19,39 @@ const ImagePage: NextPageWithLayout<ImageProps> = (props) => {
         <meta
           name="description"
           content={
-            breed
-              ? `Picture of a ${breed.name}! Learn interesting details about your furry friend on Meower, the ultimate cat image library.`
+            imageFromUrl?.breed
+              ? `Picture of a ${imageFromUrl.breed.name}! Learn interesting details about your furry friend on Meower, the ultimate cat image library.`
               : `Picture of a cat! Learn interesting details about your furry friend on Meower, the ultimate cat image library.`
           }
           key="desc"
         />
-        <meta property="og:image" content={props.requiredCat.url} />
+        {imageFromUrl && (
+          <meta property="og:image" content={imageFromUrl.image.src} />
+        )}
       </Head>
-      <Home requiredCat={props.requiredCat} />
+      <Home imageFromUrl={imageFromUrl} />
     </>
   );
 };
 
 export const getServerSideProps: GetServerSideProps<ImageProps> = async ({
   params,
-}) => ({
-  props: {
-    requiredCat: await getImageById(params?.imageId as string),
-  },
-});
+}) => {
+  if (!params || typeof params.imageId !== "string")
+    return {
+      props: {},
+    };
+
+  const response = await axios.get(
+    `https://api.thecatapi.com/v1/images/${params.imageId}`
+  );
+
+  return {
+    props: {
+      imageFromUrl: normalizeImageData(ImageData.parse(response.data)),
+    },
+  };
+};
 
 ImagePage.getLayout = MainLayout;
 

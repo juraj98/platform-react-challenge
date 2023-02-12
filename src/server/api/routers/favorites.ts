@@ -1,6 +1,7 @@
 import axios from "axios";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
+import type { NormalizedImageData } from "./images";
 import { imagesRouter } from "./images";
 
 export const Favorite = z.object({
@@ -13,6 +14,12 @@ export const Favorite = z.object({
   image_id: z.string(),
   sub_id: z.string(),
 });
+
+export interface FavoriteData {
+  id: number;
+  createdAt: string;
+  imageData: NormalizedImageData;
+}
 
 export const favoritesRouter = createTRPCRouter({
   getFavorites: publicProcedure.query(async ({ input, ctx }) => {
@@ -37,7 +44,7 @@ export const favoritesRouter = createTRPCRouter({
           id: favorite.id,
           createdAt: favorite.created_at,
           imageData,
-        };
+        } as FavoriteData;
       })
     );
 
@@ -47,7 +54,7 @@ export const favoritesRouter = createTRPCRouter({
   setFavorite: publicProcedure
     .input(z.object({ imageId: z.string() }))
     .mutation(async ({ input }) => {
-      return await axios.post("https://api.thecatapi.com/v1/favourites", {
+      await axios.post("https://api.thecatapi.com/v1/favourites", {
         image_id: input.imageId,
         sub_id: input.subId,
       });
@@ -56,7 +63,7 @@ export const favoritesRouter = createTRPCRouter({
   deleteFavorite: publicProcedure
     .input(z.object({ favoriteId: z.number() }))
     .mutation(async ({ input }) => {
-      return await axios.delete(
+      await axios.delete(
         `https://api.thecatapi.com/v1/favourites/${input.favoriteId}`
       );
     }),
