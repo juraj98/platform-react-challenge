@@ -10,9 +10,12 @@ export const Favorites = () => {
   const subId = useSubId();
 
   const { isLoading, refetch, isError, data } =
-    api.favorites.getFavorites.useQuery({
-      subId,
-    });
+    api.favorites.getFavorites.useQuery(
+      {
+        subId,
+      },
+      { enabled: Boolean(subId) }
+    );
 
   if (isError) {
     return <ErrorMessage />;

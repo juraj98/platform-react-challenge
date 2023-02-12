@@ -25,9 +25,12 @@ export const useCatModal = ({
     isFetching,
     isLoading,
     refetch,
-  } = api.favorites.getFavorites.useQuery({
-    subId,
-  });
+  } = api.favorites.getFavorites.useQuery(
+    {
+      subId,
+    },
+    { enabled: Boolean(subId) }
+  );
 
   const favorite = favorites?.find(
     (favorite) => favorite.imageData.id === imageData?.id

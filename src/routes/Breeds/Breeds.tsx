@@ -16,6 +16,7 @@ export const Breeds = () => {
       refetchOnWindowFocus: false,
       keepPreviousData: true,
       refetchOnMount: false,
+      enabled: Boolean(subId),
     }
   );
 

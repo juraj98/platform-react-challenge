@@ -22,6 +22,7 @@ export const useHomeInfiniteScroll = (imageFromUrl?: NormalizedImageData) => {
         refetchOnWindowFocus: false,
         keepPreviousData: true,
         refetchOnMount: false,
+        enabled: Boolean(subId),
       }
     );
 
