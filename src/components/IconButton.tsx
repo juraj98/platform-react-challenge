@@ -10,7 +10,7 @@ export interface IconButtonProps {
   shape?: "circle" | "square";
 }
 
-const IconButton = ({
+export const IconButton = ({
   onClick,
   children,
   isLoading,
@@ -30,5 +30,3 @@ const IconButton = ({
     {isLoading ? null : children}
   </button>
 );
-
-export default IconButton;

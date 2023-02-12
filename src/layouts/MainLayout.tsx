@@ -1,9 +1,9 @@
 import type { ReactElement } from "react";
 
 import Link from "next/link";
-import Logo from "../components/Logo";
+import { Logo } from "../components/Logo";
 
-export default function MainLayout(page: ReactElement) {
+export const MainLayout = (page: ReactElement) => {
   return (
     <div className="min-h-screen">
       <header className="supports-backdrop-blur:bg-white/60 sticky top-0 z-10 w-full flex-none border-b border-slate-900/10 bg-white/95 backdrop-blur">
@@ -36,4 +36,4 @@ export default function MainLayout(page: ReactElement) {
       <main className="mx-auto max-w-7xl p-8">{page}</main>
     </div>
   );
-}
+};

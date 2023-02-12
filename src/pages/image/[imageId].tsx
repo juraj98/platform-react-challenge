@@ -3,7 +3,7 @@ import Head from "next/head";
 import Home from "..";
 import type { NormalizedCatData } from "../../api";
 import { getImageById } from "../../api";
-import MainLayout from "../../layouts/MainLayout";
+import { MainLayout } from "../../layouts/MainLayout";
 import type { NextPageWithLayout } from "../_app";
 
 interface ImageProps {

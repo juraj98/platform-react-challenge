@@ -5,7 +5,7 @@ import type { ImportedImage } from "../types";
 
 const catPaw = catPawSvg as ImportedImage;
 
-export default function Logo() {
+export const Logo = () => {
   return (
     <Link
       href="/"
@@ -15,4 +15,4 @@ export default function Logo() {
       <span className="pl-4">Meower</span>
     </Link>
   );
-}
+};

@@ -18,7 +18,7 @@ export interface CatStatsProps {
   stats: BreedStats;
 }
 
-const CatStats = ({ stats, fullWidth = false }: CatStatsProps) => {
+export const CatStats = ({ stats, fullWidth = false }: CatStatsProps) => {
   return (
     <div
       className={classNames(
@@ -47,5 +47,3 @@ const CatStats = ({ stats, fullWidth = false }: CatStatsProps) => {
     </div>
   );
 };
-
-export default CatStats;

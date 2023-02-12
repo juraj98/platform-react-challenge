@@ -2,7 +2,7 @@ export interface CatTagsProps {
   tags: string[];
 }
 
-const CatTags = ({ tags }: CatTagsProps) => {
+export const CatTags = ({ tags }: CatTagsProps) => {
   return (
     <div className="max-h-full overflow-auto p-4">
       <ul className="flex flex-wrap items-center gap-2">
@@ -15,5 +15,3 @@ const CatTags = ({ tags }: CatTagsProps) => {
     </div>
   );
 };
-
-export default CatTags;

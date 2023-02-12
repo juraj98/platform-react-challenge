@@ -4,7 +4,7 @@ import type { CatBreed, NormalizedCatData } from "../../api";
 import { getImages } from "../../api";
 import { normalizeBreed } from "../../api";
 import { getImageDataOrPlaceholder } from "../../utils/image";
-import CatModal from "../../components/CatModal/CatModal";
+import { CatModal } from "../../components/CatModal/CatModal";
 
 export type SetBreedModalData = (
   breed: CatBreed,

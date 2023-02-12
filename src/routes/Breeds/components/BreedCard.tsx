@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { CatBreed } from "../../../api";
 import { getImages } from "../../../api";
-import Card from "../../../components/Card";
+import { Card } from "../../../components/Card";
 import { getImageDataOrPlaceholder } from "../../../utils/image";
 import type { SetBreedModalData } from "../useBreedModal";
 
@@ -10,7 +10,7 @@ export interface BreedCardProps {
   setBreedModalData: SetBreedModalData;
 }
 
-const BreedCard = ({ breed, setBreedModalData }: BreedCardProps) => {
+export const BreedCard = ({ breed, setBreedModalData }: BreedCardProps) => {
   const { isError, data } = useQuery({
     queryKey: ["images", "breed", breed.id, 1],
     queryFn: () =>
@@ -51,5 +51,3 @@ const BreedCard = ({ breed, setBreedModalData }: BreedCardProps) => {
     />
   );
 };
-
-export default BreedCard;

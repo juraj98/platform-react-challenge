@@ -1,6 +1,6 @@
 import type { IconProps } from "./types";
 
-export default function IconClose({ className, style }: IconProps) {
+export const IconClose = ({ className, style }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ export default function IconClose({ className, style }: IconProps) {
       />
     </svg>
   );
-}
+};

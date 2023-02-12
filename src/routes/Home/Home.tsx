@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from "react";
 import type { NormalizedCatData } from "../../api";
-import CatCard from "./components/CatCard";
-import Grid from "../../components/Grid";
-import LoadingGrid from "../../components/LoadingGrid";
-import useCatModal from "./catModal/useCatModal";
-import useHomeImages from "./useHomeImages";
+import { CatCard } from "./components/CatCard";
+import { Grid } from "../../components/Grid";
+import { LoadingGrid } from "../../components/LoadingGrid";
+import { useCatModal } from "./catModal/useCatModal";
+import { useHomeImages } from "./useHomeImages";
 
 const SCROLL_THRESHOLD = 500;
 

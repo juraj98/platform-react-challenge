@@ -1,12 +1,12 @@
 import type { NormalizedCatData } from "../../../api";
-import Card from "../../../components/Card";
+import { Card } from "../../../components/Card";
 
 export interface CatCardProps {
   catData: NormalizedCatData;
   setActiveCatId: (catId: string) => void;
 }
 
-const CatCard = ({ catData, setActiveCatId }: CatCardProps) => {
+export const CatCard = ({ catData, setActiveCatId }: CatCardProps) => {
   return (
     <Card
       key={catData.id}
@@ -37,5 +37,3 @@ const CatCard = ({ catData, setActiveCatId }: CatCardProps) => {
     />
   );
 };
-
-export default CatCard;

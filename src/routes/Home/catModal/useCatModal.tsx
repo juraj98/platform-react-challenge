@@ -1,10 +1,13 @@
 import { useMemo, useState } from "react";
 import type { NormalizedCatData } from "../../../api";
-import useStyle from "../../../hooks/useStyle";
+import { useStyle } from "../../../hooks/useStyle";
 import { useCatFavorite } from "./useCatFavorite";
-import CatModal from "../../../components/CatModal/CatModal";
+import { CatModal } from "../../../components/CatModal/CatModal";
 
-const useCatModal = (images?: NormalizedCatData[], requiredId?: string) => {
+export const useCatModal = (
+  images?: NormalizedCatData[],
+  requiredId?: string
+) => {
   const [activeCatId, setActiveCatId] = useState<string | null>(
     requiredId || null
   );
@@ -39,5 +42,3 @@ const useCatModal = (images?: NormalizedCatData[], requiredId?: string) => {
     setActiveCatId,
   };
 };
-
-export default useCatModal;

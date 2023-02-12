@@ -6,7 +6,7 @@ export interface GridProps {
   className?: string;
 }
 
-const Grid = ({ children, className }: GridProps) => {
+export const Grid = ({ children, className }: GridProps) => {
   return (
     <div
       className={classNames(
@@ -18,5 +18,3 @@ const Grid = ({ children, className }: GridProps) => {
     </div>
   );
 };
-
-export default Grid;

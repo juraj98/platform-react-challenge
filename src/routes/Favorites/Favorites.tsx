@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { getFavorites } from "../../api";
-import FavoriteCard from "./components/FavoriteCard";
-import Grid from "../../components/Grid";
-import LoadingGrid from "../../components/LoadingGrid";
+import { FavoriteCard } from "./components/FavoriteCard";
+import { Grid } from "../../components/Grid";
+import { LoadingGrid } from "../../components/LoadingGrid";
 import { useSubId } from "../../hooks/useSubId";
 
 export const Favorites = () => {

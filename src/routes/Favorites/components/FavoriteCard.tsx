@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteFavorite, getImageById } from "../../../api";
-import Card from "../../../components/Card";
-import IconClose from "../../../components/icons/IconClose";
-import IconButton from "../../../components/IconButton";
+import { Card } from "../../../components/Card";
+import { IconClose } from "../../../components/icons/IconClose";
+import { IconButton } from "../../../components/IconButton";
 import { getImageDataOrPlaceholder } from "../../../utils/image";
 
 export interface FavoriteCardProps {
@@ -10,7 +10,7 @@ export interface FavoriteCardProps {
   favoriteId: number;
 }
 
-const FavoriteCard = ({ favoriteId, imageId }: FavoriteCardProps) => {
+export const FavoriteCard = ({ favoriteId, imageId }: FavoriteCardProps) => {
   const queryClient = useQueryClient();
   const { isError, data } = useQuery({
     queryKey: ["images", imageId],
@@ -63,5 +63,3 @@ const FavoriteCard = ({ favoriteId, imageId }: FavoriteCardProps) => {
     />
   );
 };
-
-export default FavoriteCard;

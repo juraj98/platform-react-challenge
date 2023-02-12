@@ -1,6 +1,6 @@
-import Grid from "./Grid";
+import { Grid } from "./Grid";
 
-const LoadingGrid = () => {
+export const LoadingGrid = () => {
   return (
     <Grid>
       {Array.from({ length: 6 }).map((_, index) => (
@@ -9,5 +9,3 @@ const LoadingGrid = () => {
     </Grid>
   );
 };
-
-export default LoadingGrid;

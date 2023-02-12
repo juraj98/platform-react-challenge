@@ -1,4 +1,4 @@
-import MainLayout from "../layouts/MainLayout";
+import { MainLayout } from "../layouts/MainLayout";
 import type { NextPageWithLayout } from "./_app";
 import Head from "next/head";
 import { Breeds } from "../routes/Breeds/Breeds";

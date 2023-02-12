@@ -1,19 +1,19 @@
 import type { NormalizedCatBreed, NormalizedCatData } from "../../api";
-import CatTags from "./components/CatTags";
-import CatStats from "./components/CatStats";
-import IconButton from "../IconButton";
-import IconClose from "../icons/IconClose";
+import { CatTags } from "./components/CatTags";
+import { CatStats } from "./components/CatStats";
+import { IconButton } from "../IconButton";
+import { IconClose } from "../icons/IconClose";
 import type { MouseEvent } from "react";
 import classNames from "classnames";
 import {
   containTargetListener,
   sameTargetListener,
 } from "../../utils/uiListeners";
-import IconHeart from "../icons/IconHeart";
+import { IconHeart } from "../icons/IconHeart";
 import Image from "next/image";
 import type { ImageProps } from "../../utils/image";
 import { AdditionalImages } from "./components/AdditionalImages";
-import useStyle from "../../hooks/useStyle";
+import { useStyle } from "../../hooks/useStyle";
 
 export interface CatModalProps {
   onClose: (event: MouseEvent<HTMLElement>) => void;
@@ -29,7 +29,7 @@ export interface CatModalProps {
   additionalImages?: NormalizedCatData[];
 }
 
-const CatModal = ({
+export const CatModal = ({
   mainImage,
   additionalImages,
   breed,
@@ -99,5 +99,3 @@ const CatModal = ({
     </div>
   );
 };
-
-export default CatModal;

@@ -5,7 +5,7 @@ import { getImages } from "../../api";
 
 const NUMBER_OF_IMAGES = 25;
 
-export default function useHomeImages(requiredCat?: NormalizedCatData) {
+export const useHomeImages = (requiredCat?: NormalizedCatData) => {
   const {
     hasNextPage,
     isError: isImagesError,
@@ -42,4 +42,4 @@ export default function useHomeImages(requiredCat?: NormalizedCatData) {
     isFetchingNextPage,
     images,
   };
-}
+};

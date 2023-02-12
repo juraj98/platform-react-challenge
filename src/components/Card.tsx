@@ -30,7 +30,7 @@ const LinkComponent = ({
     <>{children}</>
   );
 
-const Card = ({ label, image, link, button }: CardProps) => {
+export const Card = ({ label, image, link, button }: CardProps) => {
   return (
     <LinkComponent link={link}>
       <div className="card w-96 bg-base-100 shadow-xl">
@@ -55,5 +55,3 @@ const Card = ({ label, image, link, button }: CardProps) => {
     </LinkComponent>
   );
 };
-
-export default Card;

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useStyle = (css: string | null) => {
+export const useStyle = (css: string | null) => {
   const elementRef = useRef<HTMLStyleElement>();
 
   useEffect(() => {
@@ -17,5 +17,3 @@ const useStyle = (css: string | null) => {
     if (elementRef.current) elementRef.current.innerHTML = css || "";
   }, [css]);
 };
-
-export default useStyle;
