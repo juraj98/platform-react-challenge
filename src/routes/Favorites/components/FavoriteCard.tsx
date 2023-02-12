@@ -5,6 +5,7 @@ import Link from "next/link";
 import { api } from "utils/api";
 import type { FavoriteData } from "server/api/routers/favorites";
 import { useSubId } from "hooks/useSubId";
+import { useState } from "react";
 
 export interface FavoriteCardProps {
   favorite: FavoriteData;
@@ -16,12 +17,17 @@ export const FavoriteCard = ({
   refetchFavorites,
 }: FavoriteCardProps) => {
   const subId = useSubId();
+  const [hideDeleted, setHideDeleted] = useState(false);
+
   const { mutate: deleteFavoriteMutate, isLoading: isDeleteFavoriteMutate } =
     api.favorites.deleteFavorite.useMutation({
       onSuccess: () => {
+        setHideDeleted(true);
         refetchFavorites();
       },
     });
+
+  if (hideDeleted) return null;
 
   return (
     <Link key={favorite.id} href={`image/${favorite.imageData.id}`}>
