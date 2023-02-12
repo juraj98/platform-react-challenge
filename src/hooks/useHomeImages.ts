@@ -1,10 +1,11 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { getImageById, getImages } from "../api";
+import type { NormalizedCatData } from "../api";
+import { getImages } from "../api";
 
 const NUMBER_OF_IMAGES = 25;
 
-export default function useHomeImages(requiredId?: string) {
+export default function useHomeImages(requiredCat?: NormalizedCatData) {
   const {
     hasNextPage,
     isError: isImagesError,
@@ -16,7 +17,7 @@ export default function useHomeImages(requiredId?: string) {
     queryFn: ({ pageParam = 1 }) =>
       getImages({
         page: pageParam as number,
-        limit: requiredId ? NUMBER_OF_IMAGES - 1 : NUMBER_OF_IMAGES,
+        limit: requiredCat ? NUMBER_OF_IMAGES - 1 : NUMBER_OF_IMAGES,
         hasBreeds: true,
       }),
     keepPreviousData: true,
@@ -25,29 +26,18 @@ export default function useHomeImages(requiredId?: string) {
     refetchOnMount: false,
   });
 
-  const {
-    isLoading,
-    isError: isRequiredImageError,
-    data,
-  } = useQuery({
-    enabled: Boolean(requiredId),
-    queryKey: ["image", requiredId],
-    queryFn: () =>
-      requiredId ? getImageById(requiredId) : Promise.resolve(null),
-  });
-
   const images = useMemo(
     () =>
-      data
-        ? [data, ...(result.data?.pages.flat() || [])]
+      requiredCat
+        ? [requiredCat, ...(result.data?.pages.flat() || [])]
         : result.data?.pages.flat(),
-    [data, result.data?.pages]
+    [requiredCat, result.data?.pages]
   );
 
   return {
     hasNextPage,
-    isError: isImagesError || isRequiredImageError,
-    isLoading: (Boolean(requiredId) ? isLoading : false) || result.isLoading,
+    isError: isImagesError,
+    isLoading: result.isLoading,
     fetchNextPage,
     isFetchingNextPage,
     images,

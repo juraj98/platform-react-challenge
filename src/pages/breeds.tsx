@@ -1,50 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
-import { getBreeds } from "../api";
-import Grid from "../components/Grid";
 import MainLayout from "../layouts/MainLayout";
-import BreedCard from "../components/cards/BreedCard";
 import type { NextPageWithLayout } from "./_app";
-import LoadingGrid from "../components/LoadingGrid";
-import { useBreedModal } from "../components/modals/useBreedModal";
+import Head from "next/head";
+import { Breeds } from "../routes/Breeds";
 
-const Breeds: NextPageWithLayout = () => {
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["breeds"],
-    queryFn: () => getBreeds(),
-    keepPreviousData: true,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-  });
-
-  const { node, setBreedModalData } = useBreedModal();
-
-  if (isError) {
-    return <div>Error</div>;
-  }
-
+const BreedsPage: NextPageWithLayout = () => {
   return (
-    <div>
-      {node}
-      <h2 className="mb-6 text-xl">Breeds</h2>
-      <Grid>
-        {isLoading ? (
-          <LoadingGrid />
-        ) : (
-          data.map((breed) => {
-            return (
-              <BreedCard
-                key={breed.id}
-                breed={breed}
-                setBreedModalData={setBreedModalData}
-              />
-            );
-          })
-        )}
-      </Grid>
-    </div>
+    <>
+      <Head>
+        <title>Breeds | Meower - The ultimate cat image library</title>
+        <meta
+          name="description"
+          content="Find your purrfect match! Browse a comprehensive list of cat breeds on Meower, the ultimate cat image library. Discover breed characteristics, history and more."
+          key="desc"
+        />
+      </Head>
+      <Breeds />
+    </>
   );
 };
 
-Breeds.getLayout = MainLayout;
+BreedsPage.getLayout = MainLayout;
 
-export default Breeds;
+export default BreedsPage;

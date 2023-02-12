@@ -12,7 +12,7 @@ export default function Logo() {
       className="bold flex flex-1 items-center whitespace-nowrap text-lg"
     >
       <Image src={catPaw.src} width={28} height={28} alt="Cat paw" />
-      <span className="pl-4">Cat Images</span>
+      <span className="pl-4">Meower</span>
     </Link>
   );
 }

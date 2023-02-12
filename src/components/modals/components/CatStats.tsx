@@ -30,7 +30,7 @@ const CatStats = ({ stats, fullWidth = false }: CatStatsProps) => {
         {ATTRIBUTES.map(([key, label]) => {
           const value = stats[key];
 
-          if (value === undefined) return null;
+          if (value === null) return null;
 
           return (
             <li key={key}>

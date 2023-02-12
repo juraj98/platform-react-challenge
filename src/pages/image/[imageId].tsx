@@ -1,15 +1,45 @@
-import { useRouter } from "next/router";
+import type { GetServerSideProps } from "next";
+import Head from "next/head";
 import Home from "..";
+import type { NormalizedCatData } from "../../api";
+import { getImageById } from "../../api";
 import MainLayout from "../../layouts/MainLayout";
 import type { NextPageWithLayout } from "../_app";
 
-const Image: NextPageWithLayout = () => {
-  const router = useRouter();
-  const { imageId } = router.query;
+interface ImageProps {
+  requiredCat: NormalizedCatData;
+}
 
-  return typeof imageId === "string" ? <Home requiredId={imageId} /> : <Home />;
+const ImagePage: NextPageWithLayout<ImageProps> = (props) => {
+  const breed = props.requiredCat.breeds?.[0];
+
+  return (
+    <>
+      <Head>
+        <title>Meower - The best cat pictures</title>
+        <meta
+          name="description"
+          content={
+            breed
+              ? `Picture of a ${breed.name}! Learn interesting details about your furry friend on Meower, the ultimate cat image library.`
+              : `Picture of a cat! Learn interesting details about your furry friend on Meower, the ultimate cat image library.`
+          }
+          key="desc"
+        />
+      </Head>
+      <Home requiredCat={props.requiredCat} />
+    </>
+  );
 };
 
-Image.getLayout = MainLayout;
+export const getServerSideProps: GetServerSideProps<ImageProps> = async ({
+  params,
+}) => ({
+  props: {
+    requiredCat: await getImageById(params?.imageId as string),
+  },
+});
 
-export default Image;
+ImagePage.getLayout = MainLayout;
+
+export default ImagePage;

@@ -1,57 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
-import { getFavorites } from "../api";
-import FavoriteCard from "../components/cards/FavoriteCard";
-import Grid from "../components/Grid";
-import LoadingGrid from "../components/LoadingGrid";
-import { useSubId } from "../hooks/useSubId";
+import Head from "next/head";
+
 import MainLayout from "../layouts/MainLayout";
+import { Favorites } from "../routes/Favorites";
 import type { NextPageWithLayout } from "./_app";
 
-const NoData = () => {
+const FavoritesPage: NextPageWithLayout = () => {
   return (
-    <div className="flex h-full flex-col items-center justify-center">
-      <h2 className="text-xl">You have no favorites</h2>
-      <p className="text-sm text-gray-500">
-        You can add images to your favorites by clicking the heart icon on the
-        image page.
-      </p>
-      <button className="btn mt-6">Browse images</button>
-    </div>
+    <>
+      <Head>
+        <title>Favorites | Meower - The ultimate cat image library</title>
+        <meta
+          name="description"
+          content="Your personal cat gallery! View and keep track of your favorite cats on Meower, the ultimate cat image library. Save and revisit the cutest felines anytime."
+          key="desc"
+        />
+      </Head>
+      <Favorites />
+    </>
   );
 };
 
-const Favorites: NextPageWithLayout = () => {
-  const subId = useSubId();
+FavoritesPage.getLayout = MainLayout;
 
-  const { isLoading, isError, data } = useQuery({
-    queryKey: ["favorites"],
-    queryFn: () => getFavorites(subId),
-  });
-
-  if (isError) {
-    return <div>Error</div>;
-  }
-
-  if (isLoading) return <LoadingGrid />;
-
-  if (data?.length === 0) return <NoData />;
-
-  return (
-    <div>
-      <h2 className="mb-6 text-xl">Favorites</h2>
-      <Grid>
-        {data.map((favorite) => (
-          <FavoriteCard
-            favoriteId={favorite.id}
-            imageId={favorite.image_id}
-            key={favorite.id}
-          />
-        ))}
-      </Grid>
-    </div>
-  );
-};
-
-Favorites.getLayout = MainLayout;
-
-export default Favorites;
+export default FavoritesPage;
