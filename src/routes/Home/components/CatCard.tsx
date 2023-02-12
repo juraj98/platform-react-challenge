@@ -1,5 +1,5 @@
-import type { NormalizedCatData } from "../../api";
-import Card from "./Card";
+import type { NormalizedCatData } from "../../../api";
+import Card from "../../../components/Card";
 
 export interface CatCardProps {
   catData: NormalizedCatData;

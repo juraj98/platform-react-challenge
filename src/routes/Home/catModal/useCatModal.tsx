@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import type { NormalizedCatData } from "../../../api";
 import useStyle from "../../../hooks/useStyle";
 import { useCatFavorite } from "./useCatFavorite";
-import Modal from "../Modal";
+import CatModal from "../../../components/CatModal/CatModal";
 
 const useCatModal = (images?: NormalizedCatData[], requiredId?: string) => {
   const [activeCatId, setActiveCatId] = useState<string | null>(
@@ -18,7 +18,7 @@ const useCatModal = (images?: NormalizedCatData[], requiredId?: string) => {
   }, [activeCatId, images]);
 
   const node = activeCatData ? (
-    <Modal
+    <CatModal
       mainImage={{
         src: activeCatData.url,
         alt: activeCatData.breeds[0]?.name || "Cat",

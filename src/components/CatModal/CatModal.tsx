@@ -29,7 +29,7 @@ export interface CatModalProps {
   additionalImages?: NormalizedCatData[];
 }
 
-const Modal = ({
+const CatModal = ({
   mainImage,
   additionalImages,
   breed,
@@ -100,4 +100,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default CatModal;

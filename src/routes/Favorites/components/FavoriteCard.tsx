@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deleteFavorite, getImageById } from "../../api";
-import Card from "./Card";
-import IconClose from "../icons/IconClose";
-import IconButton from "../IconButton";
-import { getImageDataOrPlaceholder } from "../../utils/image";
+import { deleteFavorite, getImageById } from "../../../api";
+import Card from "../../../components/Card";
+import IconClose from "../../../components/icons/IconClose";
+import IconButton from "../../../components/IconButton";
+import { getImageDataOrPlaceholder } from "../../../utils/image";
 
 export interface FavoriteCardProps {
   imageId: string;

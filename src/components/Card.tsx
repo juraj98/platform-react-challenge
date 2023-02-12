@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { MouseEvent, ReactNode } from "react";
-import type { ImageProps } from "../../utils/image";
+import type { ImageProps } from "../utils/image";
 
 export interface CardLink {
   onClick?: (event: MouseEvent) => void;

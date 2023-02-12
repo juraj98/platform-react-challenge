@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBreeds } from "../api";
-import Grid from "../components/Grid";
-import BreedCard from "../components/cards/BreedCard";
-import LoadingGrid from "../components/LoadingGrid";
-import { useBreedModal } from "../components/modals/useBreedModal";
+import { getBreeds } from "../../api";
+import Grid from "../../components/Grid";
+import BreedCard from "./components/BreedCard";
+import LoadingGrid from "../../components/LoadingGrid";
+import { useBreedModal } from "./useBreedModal";
 
 export const Breeds = () => {
   const { isLoading, isError, data } = useQuery({

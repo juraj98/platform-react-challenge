@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import type { CatBreed } from "../../api";
-import { getImages } from "../../api";
-import Card from "./Card";
-import { getImageDataOrPlaceholder } from "../../utils/image";
-import type { SetBreedModalData } from "../modals/useBreedModal";
+import type { CatBreed } from "../../../api";
+import { getImages } from "../../../api";
+import Card from "../../../components/Card";
+import { getImageDataOrPlaceholder } from "../../../utils/image";
+import type { SetBreedModalData } from "../useBreedModal";
 
 export interface BreedCardProps {
   breed: CatBreed;

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import MainLayout from "../layouts/MainLayout";
-import type { HomeProps } from "../routes/Home";
-import { Home } from "../routes/Home";
+import type { HomeProps } from "../routes/Home/Home";
+import { Home } from "../routes/Home/Home";
 import type { NextPageWithLayout } from "./_app";
 
 const HomePage: NextPageWithLayout<HomeProps> = ({ requiredCat }) => {

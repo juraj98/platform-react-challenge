@@ -4,7 +4,7 @@ import type { CatBreed, NormalizedCatData } from "../../api";
 import { getImages } from "../../api";
 import { normalizeBreed } from "../../api";
 import { getImageDataOrPlaceholder } from "../../utils/image";
-import Modal from "./Modal";
+import CatModal from "../../components/CatModal/CatModal";
 
 export type SetBreedModalData = (
   breed: CatBreed,
@@ -44,7 +44,7 @@ export const useBreedModal = () => {
   }, [breedData, isOpened, queryClient]);
 
   const node = isOpened ? (
-    <Modal
+    <CatModal
       onClose={() => setIsOpened(false)}
       mainImage={getImageDataOrPlaceholder({
         src: breedImageData?.url,

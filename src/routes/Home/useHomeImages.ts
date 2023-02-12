@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import type { NormalizedCatData } from "../api";
-import { getImages } from "../api";
+import type { NormalizedCatData } from "../../api";
+import { getImages } from "../../api";
 
 const NUMBER_OF_IMAGES = 25;
 

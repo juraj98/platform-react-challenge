@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import MainLayout from "../layouts/MainLayout";
-import { Favorites } from "../routes/Favorites";
+import { Favorites } from "../routes/Favorites/Favorites";
 import type { NextPageWithLayout } from "./_app";
 
 const FavoritesPage: NextPageWithLayout = () => {
