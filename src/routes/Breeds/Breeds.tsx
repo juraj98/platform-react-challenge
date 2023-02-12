@@ -8,17 +8,18 @@ import { api } from "utils/api";
 
 export const Breeds = () => {
   const subId = useSubId();
-  const { isLoading, isError, data } = api.breeds.getListOfBreeds.useQuery(
-    {
-      subId,
-    },
-    {
-      refetchOnWindowFocus: false,
-      keepPreviousData: true,
-      refetchOnMount: false,
-      enabled: Boolean(subId),
-    }
-  );
+  const { isFetching, isLoading, isError, data } =
+    api.breeds.getListOfBreeds.useQuery(
+      {
+        subId,
+      },
+      {
+        refetchOnWindowFocus: true,
+        keepPreviousData: false,
+        refetchOnMount: true,
+        enabled: Boolean(subId),
+      }
+    );
 
   const { node, setModalData } = useCatModal({
     showFavoriteButton: false,
@@ -34,7 +35,7 @@ export const Breeds = () => {
       {node}
       <h2 className="mb-6 text-xl">Breeds</h2>
       <Grid>
-        {isLoading ? (
+        {isFetching || isLoading ? (
           <LoadingGrid />
         ) : (
           data.map((imageData) => {

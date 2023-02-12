@@ -9,22 +9,28 @@ const SCROLL_THRESHOLD_PX = 500;
 export const useHomeInfiniteScroll = (imageFromUrl?: NormalizedImageData) => {
   const subId = useSubId();
 
-  const { data, isError, fetchNextPage, isFetchingNextPage, isLoading } =
-    api.images.getImages.useInfiniteQuery(
-      {
-        limit: imageFromUrl
-          ? NUMBER_OF_IMAGES_PER_PAGE - 1
-          : NUMBER_OF_IMAGES_PER_PAGE,
-        subId,
-      },
-      {
-        getNextPageParam: (lastPage, allPages) => allPages.length + 1,
-        refetchOnWindowFocus: false,
-        keepPreviousData: true,
-        refetchOnMount: false,
-        enabled: Boolean(subId),
-      }
-    );
+  const {
+    data,
+    isError,
+    isFetching,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = api.images.getImages.useInfiniteQuery(
+    {
+      limit: imageFromUrl
+        ? NUMBER_OF_IMAGES_PER_PAGE - 1
+        : NUMBER_OF_IMAGES_PER_PAGE,
+      subId,
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => allPages.length + 1,
+      refetchOnWindowFocus: false,
+      keepPreviousData: false,
+      refetchOnMount: false,
+      enabled: Boolean(subId),
+    }
+  );
 
   const images = useMemo(
     () =>
@@ -35,7 +41,7 @@ export const useHomeInfiniteScroll = (imageFromUrl?: NormalizedImageData) => {
   );
 
   const onScrollListener = useCallback(() => {
-    if (isFetchingNextPage) return;
+    if (isFetching || isLoading) return;
 
     if (
       window.scrollY >
@@ -43,7 +49,7 @@ export const useHomeInfiniteScroll = (imageFromUrl?: NormalizedImageData) => {
     ) {
       void fetchNextPage();
     }
-  }, [isFetchingNextPage, fetchNextPage]);
+  }, [isFetching, isLoading, fetchNextPage]);
 
   useEffect(() => {
     if (!document) return;
@@ -58,6 +64,7 @@ export const useHomeInfiniteScroll = (imageFromUrl?: NormalizedImageData) => {
   return {
     isError,
     isFetchingNextPage,
+    isFetching,
     isLoading,
     fetchNextPage,
     images,

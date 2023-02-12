@@ -12,8 +12,14 @@ export interface HomeProps {
 }
 
 export const Home = ({ imageFromUrl }: HomeProps) => {
-  const { isError, isFetchingNextPage, fetchNextPage, isLoading, images } =
-    useHomeInfiniteScroll(imageFromUrl);
+  const {
+    isError,
+    isFetchingNextPage,
+    isFetching,
+    fetchNextPage,
+    isLoading,
+    images,
+  } = useHomeInfiniteScroll(imageFromUrl);
 
   const { setModalData, node: modalNode } = useCatModal({
     showFavoriteButton: true,
@@ -40,10 +46,12 @@ export const Home = ({ imageFromUrl }: HomeProps) => {
     </button>
   );
 
+  const displayLoadingGrid = isLoading || (isFetching && !isFetchingNextPage);
+
   return (
     <div>
       <h2 className="mb-6 text-xl">Images</h2>
-      {isLoading ? (
+      {displayLoadingGrid ? (
         <LoadingGrid />
       ) : (
         <Grid>
@@ -65,7 +73,7 @@ export const Home = ({ imageFromUrl }: HomeProps) => {
           })}
         </Grid>
       )}
-      {!isLoading && fetchNextPageIndicator}
+      {!displayLoadingGrid && fetchNextPageIndicator}
       {modalNode}
     </div>
   );
