@@ -17,6 +17,7 @@ const BreedCard = ({ breed, setBreedModalData }: BreedCardProps) => {
       getImages({
         breedIds: [breed.id],
         limit: 1,
+        order: "ASC",
       }),
     keepPreviousData: true,
     refetchOnWindowFocus: false,

@@ -7,6 +7,19 @@ import { useSubId } from "../hooks/useSubId";
 import MainLayout from "../layouts/MainLayout";
 import type { NextPageWithLayout } from "./_app";
 
+const NoData = () => {
+  return (
+    <div className="flex h-full flex-col items-center justify-center">
+      <h2 className="text-xl">You have no favorites</h2>
+      <p className="text-sm text-gray-500">
+        You can add images to your favorites by clicking the heart icon on the
+        image page.
+      </p>
+      <button className="btn mt-6">Browse images</button>
+    </div>
+  );
+};
+
 const Favorites: NextPageWithLayout = () => {
   const subId = useSubId();
 
@@ -19,21 +32,21 @@ const Favorites: NextPageWithLayout = () => {
     return <div>Error</div>;
   }
 
+  if (isLoading) return <LoadingGrid />;
+
+  if (data?.length === 0) return <NoData />;
+
   return (
     <div>
       <h2 className="mb-6 text-xl">Favorites</h2>
       <Grid>
-        {isLoading ? (
-          <LoadingGrid />
-        ) : (
-          data.map((favorite) => (
-            <FavoriteCard
-              favoriteId={favorite.id}
-              imageId={favorite.image_id}
-              key={favorite.id}
-            />
-          ))
-        )}
+        {data.map((favorite) => (
+          <FavoriteCard
+            favoriteId={favorite.id}
+            imageId={favorite.image_id}
+            key={favorite.id}
+          />
+        ))}
       </Grid>
     </div>
   );
