@@ -1,13 +1,18 @@
 import { createTRPCRouter } from "./trpc";
-import { exampleRouter } from "./routers/example";
+import { env } from "../../env.mjs";
+import { imagesRouter } from "./routers/images";
+import axios from "axios";
+import { breedsRouter } from "./routers/breeds";
+import { favoritesRouter } from "./routers/favorites";
 
-/**
- * This is the primary router for your server.
- *
- * All routers added in /api/routers should be manually added here
- */
+axios.defaults.params = {
+  api_key: env.CAT_API_KEY,
+};
+
 export const appRouter = createTRPCRouter({
-  example: exampleRouter,
+  images: imagesRouter,
+  breeds: breedsRouter,
+  favorites: favoritesRouter,
 });
 
 // export type definition of API
