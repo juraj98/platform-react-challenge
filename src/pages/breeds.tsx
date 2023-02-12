@@ -16,7 +16,7 @@ const Breeds: NextPageWithLayout = () => {
     refetchOnMount: false,
   });
 
-  const { node, setActiveBreedId } = useBreedModal(data);
+  const { node, setBreedModalData } = useBreedModal();
 
   if (isError) {
     return <div>Error</div>;
@@ -35,7 +35,7 @@ const Breeds: NextPageWithLayout = () => {
               <BreedCard
                 key={breed.id}
                 breed={breed}
-                setActiveBreedId={setActiveBreedId}
+                setBreedModalData={setBreedModalData}
               />
             );
           })

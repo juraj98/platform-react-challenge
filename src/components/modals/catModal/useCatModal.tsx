@@ -27,7 +27,10 @@ const useCatModal = (images?: NormalizedCatData[], requiredId?: string) => {
       }}
       favorite={favorite}
       breed={activeCatData?.breeds[0]}
-      onClose={() => setActiveCatId(null)}
+      onClose={() => {
+        setActiveCatId(null);
+        window.history.pushState({}, "", `/`);
+      }}
     />
   ) : null;
 

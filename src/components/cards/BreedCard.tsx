@@ -3,13 +3,14 @@ import type { CatBreed } from "../../api";
 import { getImages } from "../../api";
 import Card from "./Card";
 import { getImageDataOrPlaceholder } from "../../utils/image";
+import type { SetBreedModalData } from "../modals/useBreedModal";
 
 export interface BreedCardProps {
   breed: CatBreed;
-  setActiveBreedId: (catId: string) => void;
+  setBreedModalData: SetBreedModalData;
 }
 
-const BreedCard = ({ breed, setActiveBreedId }: BreedCardProps) => {
+const BreedCard = ({ breed, setBreedModalData }: BreedCardProps) => {
   const { isError, data } = useQuery({
     queryKey: ["images", "breed", breed.id, 1],
     queryFn: () =>
@@ -41,7 +42,9 @@ const BreedCard = ({ breed, setActiveBreedId }: BreedCardProps) => {
           event.preventDefault();
           event.stopPropagation();
 
-          setActiveBreedId(breed.id);
+          if (data?.[0]) {
+            setBreedModalData(breed, data[0]);
+          }
         },
       }}
     />

@@ -49,7 +49,14 @@ const FavoriteCard = ({ favoriteId, imageId }: FavoriteCardProps) => {
           : undefined
       }
       button={
-        <IconButton onClick={() => deleteMutate()} isLoading={isDeleteLoading}>
+        <IconButton
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            deleteMutate();
+          }}
+          isLoading={isDeleteLoading}
+        >
           <IconClose />
         </IconButton>
       }
