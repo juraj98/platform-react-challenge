@@ -4,6 +4,7 @@ import { Grid } from "../../components/Grid";
 import { BreedCard } from "./components/BreedCard";
 import { LoadingGrid } from "../../components/LoadingGrid";
 import { useBreedModal } from "./useBreedModal";
+import { ErrorMessage } from "../../components/ErrorMessage";
 
 export const Breeds = () => {
   const { isLoading, isError, data } = useQuery({
@@ -17,7 +18,7 @@ export const Breeds = () => {
   const { node, setBreedModalData } = useBreedModal();
 
   if (isError) {
-    return <div>Error</div>;
+    return <ErrorMessage />;
   }
 
   return (

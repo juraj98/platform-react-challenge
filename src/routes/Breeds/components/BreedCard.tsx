@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { CatBreed } from "../../../api";
 import { getImages } from "../../../api";
 import { Card } from "../../../components/Card";
+import { ErrorMessage } from "../../../components/ErrorMessage";
 import { getImageDataOrPlaceholder } from "../../../utils/image";
 import type { SetBreedModalData } from "../useBreedModal";
 
@@ -24,7 +25,7 @@ export const BreedCard = ({ breed, setBreedModalData }: BreedCardProps) => {
   });
 
   if (isError) {
-    return <div>Error</div>;
+    return <ErrorMessage />;
   }
 
   return (

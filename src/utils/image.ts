@@ -1,5 +1,7 @@
-import catPlaceholderLg from "../assets/images/cat-placeholder-lg.svg";
+import catPlaceholderLgSvg from "../assets/images/cat-placeholder-lg.svg";
 import type { ImportedImage } from "../types";
+
+const catPlaceholderLg = catPlaceholderLgSvg as ImportedImage;
 
 export interface ImageProps {
   alt: string;
@@ -9,9 +11,9 @@ export interface ImageProps {
 }
 
 const placeholderImageData = {
-  src: (catPlaceholderLg as ImportedImage).src,
-  width: (catPlaceholderLg as ImportedImage).width,
-  height: (catPlaceholderLg as ImportedImage).height,
+  src: catPlaceholderLg.src,
+  width: catPlaceholderLg.width,
+  height: catPlaceholderLg.height,
   alt: "Cat placeholder",
 };
 

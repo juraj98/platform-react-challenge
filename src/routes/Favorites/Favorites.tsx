@@ -5,6 +5,7 @@ import { FavoriteCard } from "./components/FavoriteCard";
 import { Grid } from "../../components/Grid";
 import { LoadingGrid } from "../../components/LoadingGrid";
 import { useSubId } from "../../hooks/useSubId";
+import { ErrorMessage } from "../../components/ErrorMessage";
 
 export const Favorites = () => {
   const subId = useSubId();
@@ -15,7 +16,7 @@ export const Favorites = () => {
   });
 
   if (isError) {
-    return <div>Error</div>;
+    return <ErrorMessage />;
   }
 
   if (isLoading) return <LoadingGrid />;

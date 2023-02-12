@@ -5,6 +5,7 @@ import { Grid } from "../../components/Grid";
 import { LoadingGrid } from "../../components/LoadingGrid";
 import { useCatModal } from "./catModal/useCatModal";
 import { useHomeImages } from "./useHomeImages";
+import { ErrorMessage } from "../../components/ErrorMessage";
 
 const SCROLL_THRESHOLD = 500;
 
@@ -56,7 +57,7 @@ export const Home = ({ requiredCat }: HomeProps) => {
   }, [onScrollListener]);
 
   if (isError) {
-    return <div>Error</div>;
+    return <ErrorMessage />;
   }
 
   const loadMore = isFetchingNextPage ? (

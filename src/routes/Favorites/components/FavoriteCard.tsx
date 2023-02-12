@@ -4,6 +4,7 @@ import { Card } from "../../../components/Card";
 import { IconClose } from "../../../components/icons/IconClose";
 import { IconButton } from "../../../components/IconButton";
 import { getImageDataOrPlaceholder } from "../../../utils/image";
+import { ErrorMessage } from "../../../components/ErrorMessage";
 
 export interface FavoriteCardProps {
   imageId: string;
@@ -28,7 +29,7 @@ export const FavoriteCard = ({ favoriteId, imageId }: FavoriteCardProps) => {
   });
 
   if (isError) {
-    return <div>Error</div>;
+    return <ErrorMessage />;
   }
 
   return (
