@@ -1,6 +1,6 @@
 import { ErrorMessage } from "components/ErrorMessage";
-import { Grid } from "components/Grid";
 import { LoadingGrid } from "components/LoadingGrid";
+import { MasonryGrid } from "components/MasonryGrid";
 import { useSubId } from "hooks/useSubId";
 import Link from "next/link";
 import { FavoriteCard } from "routes/Favorites/components/FavoriteCard";
@@ -40,15 +40,21 @@ export const Favorites = () => {
   return (
     <div>
       <h2 className="mb-6 text-xl">Favorites</h2>
-      <Grid>
-        {data.map((favorite) => (
-          <FavoriteCard
-            refetchFavorites={() => void refetch()}
-            key={favorite.id}
-            favorite={favorite}
-          />
-        ))}
-      </Grid>
+      <MasonryGrid
+        items={data.map((favorite) => ({
+          size: {
+            width: favorite.imageData.image.width,
+            height: favorite.imageData.image.height,
+          },
+          element: (
+            <FavoriteCard
+              refetchFavorites={() => void refetch()}
+              key={favorite.id}
+              favorite={favorite}
+            />
+          ),
+        }))}
+      />
     </div>
   );
 };

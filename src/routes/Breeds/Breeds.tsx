@@ -1,8 +1,8 @@
 import { Card } from "components/Card";
 import { useCatModal } from "components/CatModal/useCatModal";
 import { ErrorMessage } from "components/ErrorMessage";
-import { Grid } from "components/Grid";
 import { LoadingGrid } from "components/LoadingGrid";
+import { MasonryGrid } from "components/MasonryGrid";
 import { useSubId } from "hooks/useSubId";
 import { api } from "utils/api";
 
@@ -38,17 +38,23 @@ export const Breeds = () => {
         {isFetching || isLoading ? (
           <LoadingGrid />
         ) : (
-          data.map((imageData) => {
-            return (
-              <Card
-                className="cursor-pointer"
-                key={imageData.id}
-                image={imageData.image}
-                label={imageData.breed?.name ?? "Unknown breed"}
-                onClick={() => setModalData(imageData)}
-              />
-            );
-          })
+          <MasonryGrid
+            items={data.map((imageData) => ({
+              size: {
+                width: imageData.image.width,
+                height: imageData.image.height,
+              },
+              element: (
+                <Card
+                  className="cursor-pointer"
+                  key={imageData.id}
+                  image={imageData.image}
+                  label={imageData.breed?.name ?? "Unknown breed"}
+                  onClick={() => setModalData(imageData)}
+                />
+              ),
+            }))}
+          />
         )}
       </Grid>
     </div>

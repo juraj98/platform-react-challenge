@@ -50,7 +50,8 @@ export const useHomeInfiniteScroll = (
 
     if (
       window.scrollY >
-      document.body.scrollHeight - window.innerHeight - SCROLL_THRESHOLD_PX
+        document.body.scrollHeight - window.innerHeight - SCROLL_THRESHOLD_PX &&
+      !isFetching
     ) {
       void fetchNextPage();
     }
