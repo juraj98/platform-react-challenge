@@ -119,3 +119,7 @@ While implementing this feature, I also added `<title/>` and `description` meta 
 ### Masonry Gird Layout
 
 The last thing I did was that I created a custom `MasonryGrid` component. This would allow the images to be displayed in a more aesthetically pleasing way, similar to grid on sites like [imgur](https://imgur.com/).
+
+### Mobile responsiveness
+
+Given more time, I'd improve the mobile responsiveness of the application. While the current UI works fine on desktop, it could use some work on smaller screens.
