@@ -34,29 +34,27 @@ export const Breeds = () => {
     <div>
       {node}
       <h2 className="mb-6 text-xl">Breeds</h2>
-      <Grid>
-        {isFetching || isLoading ? (
-          <LoadingGrid />
-        ) : (
-          <MasonryGrid
-            items={data.map((imageData) => ({
-              size: {
-                width: imageData.image.width,
-                height: imageData.image.height,
-              },
-              element: (
-                <Card
-                  className="cursor-pointer"
-                  key={imageData.id}
-                  image={imageData.image}
-                  label={imageData.breed?.name ?? "Unknown breed"}
-                  onClick={() => setModalData(imageData)}
-                />
-              ),
-            }))}
-          />
-        )}
-      </Grid>
+      {isFetching || isLoading ? (
+        <LoadingGrid />
+      ) : (
+        <MasonryGrid
+          items={data.map((imageData) => ({
+            size: {
+              width: imageData.image.width,
+              height: imageData.image.height,
+            },
+            element: (
+              <Card
+                className="cursor-pointer"
+                key={imageData.id}
+                image={imageData.image}
+                label={imageData.breed?.name ?? "Unknown breed"}
+                onClick={() => setModalData(imageData)}
+              />
+            ),
+          }))}
+        />
+      )}
     </div>
   );
 };
