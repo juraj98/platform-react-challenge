@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import type { MouseEvent, ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 
 export interface IconButtonProps {
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   children: ReactNode;
   isLoading?: boolean;
   className?: string;
