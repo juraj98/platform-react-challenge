@@ -5,6 +5,7 @@ import { LoadingGrid } from "components/LoadingGrid";
 import { MasonryGrid } from "components/MasonryGrid";
 import { useSubId } from "hooks/useSubId";
 import { api } from "utils/api";
+import { getImageDataOrPlaceholder } from "utils/image";
 
 export const Breeds = () => {
   const subId = useSubId();
@@ -47,7 +48,7 @@ export const Breeds = () => {
               <Card
                 className="cursor-pointer"
                 key={imageData.id}
-                image={imageData.image}
+                image={getImageDataOrPlaceholder(imageData.image)}
                 label={imageData.breed?.name ?? "Unknown breed"}
                 onClick={() => setModalData(imageData)}
               />

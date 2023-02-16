@@ -18,7 +18,7 @@ export const Favorites = () => {
 
   if (isLoading) return <LoadingGrid />;
 
-  if (data?.length === 0)
+  if (data.length === 0)
     return (
       <div className="flex h-full flex-col items-center justify-center">
         <h2 className="text-xl">You have saved images</h2>
