@@ -8,12 +8,14 @@ export interface UseCatModalOptions {
   showFavoriteButton?: boolean;
   showAdditionalImages?: boolean;
   initialData?: NormalizedImageData;
+  onClose?: () => void;
 }
 
 export const useCatModal = ({
   showFavoriteButton = true,
   showAdditionalImages = true,
   initialData,
+  onClose,
 }: UseCatModalOptions) => {
   const subId = useSubId();
   const [imageData, setImageData] = useState<NormalizedImageData | null>(
@@ -26,9 +28,7 @@ export const useCatModal = ({
     isLoading,
     refetch,
   } = api.favorites.getFavorites.useQuery(
-    {
-      subId,
-    },
+    { subId },
     { enabled: Boolean(subId) }
   );
 
@@ -77,7 +77,7 @@ export const useCatModal = ({
     node: imageData ? (
       <CatModal
         onClose={() => {
-          window.history.pushState({ href: "/" }, "", "/");
+          if (onClose) onClose();
           return setImageData(null);
         }}
         showAdditionalImages={showAdditionalImages}

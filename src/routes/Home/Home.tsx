@@ -16,6 +16,9 @@ export const Home = ({ imageFromUrl }: HomeProps) => {
     showFavoriteButton: true,
     showAdditionalImages: false,
     initialData: imageFromUrl,
+    onClose: () => {
+      window.history.pushState({ href: "/" }, "", "/");
+    },
   });
 
   const {
