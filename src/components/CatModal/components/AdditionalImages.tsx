@@ -11,11 +11,7 @@ export const AdditionalImages = ({ breedId }: AdditionalImagesProps) => {
   const subId = useSubId();
 
   const { data } = api.images.getImages.useQuery(
-    {
-      breedIds: [breedId],
-      limit: 10,
-      subId,
-    },
+    { breedIds: [breedId], limit: 10, subId },
     { enabled: Boolean(subId) }
   );
 

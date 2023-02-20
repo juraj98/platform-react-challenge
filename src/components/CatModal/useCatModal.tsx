@@ -32,8 +32,10 @@ export const useCatModal = ({
     { enabled: Boolean(subId) }
   );
 
-  const favorite = favorites?.find(
-    (favorite) => favorite.imageData.id === imageData?.id
+  const favorite = useMemo(
+    () =>
+      favorites?.find((favorite) => favorite.imageData.id === imageData?.id),
+    [favorites, imageData?.id]
   );
 
   const { mutate: setFavoriteMutate, isLoading: isSetFavoriteLoading } =
